@@ -1,0 +1,78 @@
+﻿<Window x:Class="AthleteManagementTools.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="SideBarButtonTemplate" TargetType="Button">
+            <Border x:Name="border" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"
+                    BorderThickness="1" CornerRadius="10">
+                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="border" Property="BorderBrush" Value="Navy"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="SidebarButtonBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+        <Style x:Key="SidebarButton" TargetType="Button">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="Template" Value="{StaticResource SideBarButtonTemplate}"/>
+        </Style>
+        <Style x:Key="SidebarButtonText" TargetType="TextBlock">
+            <Setter Property="Padding" Value="10,5,10,5"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10,0,10,0">
+            <Button Style="{StaticResource SidebarButton}">
+                <TextBlock Text="Training Program" Style="{StaticResource SidebarButtonText}"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButton}">
+                <TextBlock Text="Crew Selection" Style="{StaticResource SidebarButtonText}"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButton}">
+                <TextBlock Text="Ergometer Split Profiling" Style="{StaticResource SidebarButtonText}" TextAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButton}">
+                <TextBlock Text="Weights Profiling" Style="{StaticResource SidebarButtonText}"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButton}">
+                <TextBlock Text="Seat Racing" Style="{StaticResource SidebarButtonText}"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBlock Text="Squads" FontSize="16" FontWeight="DemiBold"/>
+            <ComboBox>
+                <ComboBoxItem Content="Senior Men"/>
+                <ComboBoxItem Content="Senior Women"/>
+                <ComboBoxItem Content="Novice Men"/>
+                <ComboBoxItem Content="Novice Women"/>
+            </ComboBox>
+            <ListView>
+                
+            </ListView>
+            
+        </StackPanel>
+    </Grid>
+</Window>
