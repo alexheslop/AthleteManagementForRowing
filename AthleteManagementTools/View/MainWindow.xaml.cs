@@ -38,7 +38,8 @@ namespace AthleteManagementTools.View
 
         private void AddPersonBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            var newAddPersonView = new AddPersonView();
+            newAddPersonView.ShowDialog();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace AthleteManagementTools.Model
+﻿namespace AthleteManagementTools.Interfaces
 {
     public interface IPerson
     {

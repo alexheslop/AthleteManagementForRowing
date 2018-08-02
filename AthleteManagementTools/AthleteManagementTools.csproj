@@ -54,16 +54,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IRower.cs" />
     <Compile Include="Model\Coxswain.cs" />
     <Compile Include="Model\DatabaseInteraction.cs" />
-    <Compile Include="Model\IPerson.cs" />
+    <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="Model\Rower.cs" />
+    <Compile Include="ViewModel\AddPersonViewModel.cs" />
     <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
     <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SeatRacingViewModel.cs" />
     <Compile Include="ViewModel\TrainingProgramViewModel.cs" />
     <Compile Include="ViewModel\WeightsProfilingViewModel.cs" />
+    <Compile Include="View\AddPersonView.xaml.cs">
+      <DependentUpon>AddPersonView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CrewSelectionView.xaml.cs">
       <DependentUpon>CrewSelectionView.xaml</DependentUpon>
     </Compile>
@@ -79,6 +84,10 @@
     <Compile Include="View\WeightsProfilingView.xaml.cs">
       <DependentUpon>WeightsProfilingView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddPersonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CrewSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

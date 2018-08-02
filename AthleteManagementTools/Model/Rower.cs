@@ -1,4 +1,6 @@
-﻿namespace AthleteManagementTools.Model
+﻿using AthleteManagementTools.Interfaces;
+
+namespace AthleteManagementTools.Model
 {
     public class Rower:IPerson
     {
@@ -12,11 +14,10 @@
         public int BowsideRank { get; set; }
         public int ScullRank { get; set; }
 
-        public Rower(string firstName, string lastName, string squad)
+        public Rower(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
-            Squad = squad;
         }
     }
 }
