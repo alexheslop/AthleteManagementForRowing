@@ -54,7 +54,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Coxswain.cs" />
+    <Compile Include="Model\DatabaseInteraction.cs" />
+    <Compile Include="Model\IPerson.cs" />
+    <Compile Include="Model\Rower.cs" />
+    <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
+    <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SeatRacingViewModel.cs" />
+    <Compile Include="ViewModel\TrainingProgramViewModel.cs" />
+    <Compile Include="ViewModel\WeightsProfilingViewModel.cs" />
+    <Compile Include="View\CrewSelectionView.xaml.cs">
+      <DependentUpon>CrewSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ErgSplitProfilingView.xaml.cs">
+      <DependentUpon>ErgSplitProfilingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SeatRacingView.xaml.cs">
+      <DependentUpon>SeatRacingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TrainingProgramView.xaml.cs">
+      <DependentUpon>TrainingProgramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeightsProfilingView.xaml.cs">
+      <DependentUpon>WeightsProfilingView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\CrewSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ErgSplitProfilingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +99,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SeatRacingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TrainingProgramView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeightsProfilingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,8 +138,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -45,32 +45,56 @@
             <ColumnDefinition Width="80*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10,0,10,0">
-            <Button Style="{StaticResource SidebarButton}">
+            <Button Style="{StaticResource SidebarButton}" Name="TrainingProgramBtn" Click="TrainingProgramBtn_OnClick">
                 <TextBlock Text="Training Program" Style="{StaticResource SidebarButtonText}"/>
             </Button>
-            <Button Style="{StaticResource SidebarButton}">
+            <Button Style="{StaticResource SidebarButton}" Name="CrewSelectionBtn" Click="CrewSelectionBtn_OnClick">
                 <TextBlock Text="Crew Selection" Style="{StaticResource SidebarButtonText}"/>
             </Button>
-            <Button Style="{StaticResource SidebarButton}">
+            <Button Style="{StaticResource SidebarButton}" Name="ErgoSplitProfileBtn" Click="ErgoSplitProfileBtn_OnClick">
                 <TextBlock Text="Ergometer Split Profiling" Style="{StaticResource SidebarButtonText}" TextAlignment="Center"/>
             </Button>
-            <Button Style="{StaticResource SidebarButton}">
+            <Button Style="{StaticResource SidebarButton}" Name="WeightProfileBtn" Click="WeightProfileBtn_OnClick">
                 <TextBlock Text="Weights Profiling" Style="{StaticResource SidebarButtonText}"/>
             </Button>
-            <Button Style="{StaticResource SidebarButton}">
+            <Button Style="{StaticResource SidebarButton}" Name="SeatRacingBtn" Click="SeatRacingBtn_OnClick">
                 <TextBlock Text="Seat Racing" Style="{StaticResource SidebarButtonText}"/>
             </Button>
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="10">
-            <TextBlock Text="Squads" FontSize="16" FontWeight="DemiBold"/>
-            <ComboBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Squads" FontSize="16" FontWeight="DemiBold"/>
+                <Button Name="AddPersonBtn" Grid.Column="1" Style="{StaticResource SidebarButton}" Height="25" Width="100" Click="AddPersonBtn_OnClick">
+                    <TextBlock Text="Add Personnel..."/>
+                </Button>
+            </Grid>
+            <ComboBox Margin="15,25,15,0" HorizontalAlignment="Center" MinWidth="250">
                 <ComboBoxItem Content="Senior Men"/>
                 <ComboBoxItem Content="Senior Women"/>
                 <ComboBoxItem Content="Novice Men"/>
                 <ComboBoxItem Content="Novice Women"/>
             </ComboBox>
-            <ListView>
-                
+            <ListView Margin="20,25,20,0" ItemsSource="{Binding SquadList}">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="First Name" Width="80" DisplayMemberBinding="{Binding FirstName}" />
+                        <GridViewColumn Header="Last Name" Width="80" DisplayMemberBinding="{Binding LastName}" />
+                        <GridViewColumn Header="Side" Width="70" DisplayMemberBinding="{Binding Side}" />
+                        <GridViewColumn Header="Sculler?" Width="45" DisplayMemberBinding="{Binding CanScull}" />
+                        <GridViewColumn Header="Strokeside Rank" Width="100" DisplayMemberBinding="{Binding StrokesideRank}" />
+                        <GridViewColumn Header="Bowside Rank" Width="90" DisplayMemberBinding="{Binding BowsideRank}" />
+                        <GridViewColumn Header="Scull Rank" Width="75" DisplayMemberBinding="{Binding ScullRank}" />
+                    </GridView>
+                </ListView.View>
             </ListView>
             
         </StackPanel>
