@@ -6,7 +6,7 @@
         xmlns:interfaces="clr-namespace:AthleteManagementTools.Interfaces"
         xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
-        Title="AddPersonView" Height="400" Width="500">
+        Title="Add Personnel - Athlete Management" Height="400" Width="500">
     <Window.DataContext>
         <viewModel:AddPersonViewModel/>
     </Window.DataContext>
@@ -15,7 +15,7 @@
             <Grid Margin="15">
                <Grid.ColumnDefinitions>
                    <ColumnDefinition/>
-                   <ColumnDefinition/>
+                    <ColumnDefinition/>
                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30*"/>
@@ -30,6 +30,7 @@
                 <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
                     <TextBlock Text="Squad" FontSize="13"/>
                     <ComboBox Text="{Binding Squad}">
+                        <ComboBoxItem Content="None" IsSelected="True"/>
                         <ComboBoxItem Content="Senior Men"/>
                         <ComboBoxItem Content="Senior Women"/>
                         <ComboBoxItem Content="Novice Men"/>
@@ -106,19 +107,29 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <Button Height="50" Name="RowerBtn" Click="RowerBtn_OnClick">
-                <TextBlock Text="Rower" FontSize="16"/>
+        <DockPanel Grid.Column="0" LastChildFill="False">
+            <StackPanel DockPanel.Dock="Top" >
+                <Button Height="50" Name="RowerBtn" Click="RowerBtn_OnClick">
+                    <TextBlock Text="Rower" FontSize="16"/>
+                </Button>
+                <Button Height="50" Name="CoxswainBtn" Click="CoxswainBtn_OnClick">
+                    <TextBlock Text="Coxswain" FontSize="16"/>
+                </Button>
+            </StackPanel>
+            <Button DockPanel.Dock="Bottom" Height="45" Margin="10" Name="AddPersonBtn" Click="AddPersonBtn_OnClick">
+                <TextBlock Text="Add Person"/>
             </Button>
-            <Button Height="50" Name="CoxswainBtn" Click="CoxswainBtn_OnClick">
-                <TextBlock Text="Coxswain" FontSize="16"/>
-            </Button>
-        </StackPanel>
+        </DockPanel>
+        
         <ContentControl Name="ContentPanel" Grid.Column="1"/>
-
+        
+        <Button Grid.Column="2" Height="35" Margin="10" Name="FinishBtn" Click="FinishBtn_OnClickBtn_OnClick" VerticalAlignment="Bottom">
+            <TextBlock Text="Finish"/>
+        </Button>
     </Grid>
     
 </Window>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace RowerAthleteManagement.ViewModel.Converters
+namespace AthleteManagementTools.ViewModel
 {
     public class EnumConverter : IValueConverter
     {

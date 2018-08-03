@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,15 +56,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IRower.cs" />
+    <Compile Include="Model\AccessDatabaseComms.cs" />
     <Compile Include="Model\Coxswain.cs" />
-    <Compile Include="Model\DatabaseInteraction.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
+    <Compile Include="Model\ErgTestScorePredictor.cs" />
     <Compile Include="Model\Rower.cs" />
+    <Compile Include="Model\SplitCalculator.cs" />
+    <Compile Include="Model\SplitToWattsConverter.cs" />
+    <Compile Include="Model\TrainingZone.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RowingDatabaseDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RowingDatabaseDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AddPersonViewModel.cs" />
     <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
+    <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SeatRacingViewModel.cs" />
+    <Compile Include="Model\TimeToSplitConverter.cs" />
     <Compile Include="ViewModel\TrainingProgramViewModel.cs" />
     <Compile Include="ViewModel\WeightsProfilingViewModel.cs" />
     <Compile Include="View\AddPersonView.xaml.cs">
@@ -143,10 +156,25 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="RowingDatabaseDataSet.xsc">
+      <DependentUpon>RowingDatabaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="RowingDatabaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RowingDatabaseDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RowingDatabaseDataSet.xss">
+      <DependentUpon>RowingDatabaseDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="RowingDatabase.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

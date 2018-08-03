@@ -1,29 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
 {
-    /// <summary>
-    /// Interaction logic for AddPersonView.xaml
-    /// </summary>
-    public partial class AddPersonView : Window
+    public partial class AddPersonView
     {
-        private AddPersonViewModel viewModel;
+        private readonly AddPersonViewModel _viewModel;
         public AddPersonView()
         {
-            viewModel = new AddPersonViewModel();
+            _viewModel = new AddPersonViewModel();
             InitializeComponent();
             DisplayRower();
         }
@@ -31,12 +17,11 @@ namespace AthleteManagementTools.View
         private void DisplayRower()
         {
             ContentPanel.ContentTemplate = (DataTemplate)FindResource("RowerPane");
-            //ContentPanel.Content = viewModel.newRower;
-
+            
             var newBinding = new Binding
             {
-                Source = viewModel,
-                Path = new PropertyPath("newRower"),
+                Source = _viewModel,
+                Path = new PropertyPath("NewRower"),
                 Mode = BindingMode.TwoWay
             };
             BindingOperations.SetBinding(ContentPanel, ContentProperty, newBinding);
@@ -50,7 +35,27 @@ namespace AthleteManagementTools.View
         private void CoxswainBtn_OnClick(object sender, RoutedEventArgs e)
         {
             ContentPanel.ContentTemplate = (DataTemplate)FindResource("CoxswainPane");
-            ContentPanel.Content = viewModel.newCoxswain;
+            var newBinding = new Binding
+            {
+                Source = _viewModel,
+                Path = new PropertyPath("NewCoxswain"),
+                Mode = BindingMode.TwoWay
+            };
+            BindingOperations.SetBinding(ContentPanel, ContentProperty, newBinding);
+        }
+
+        private void AddPersonBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.AddPersonToDatabase())
+            {
+                MessageBox.Show("Person successfully added!");
+            }
+            
+        }
+
+        private void FinishBtn_OnClickBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

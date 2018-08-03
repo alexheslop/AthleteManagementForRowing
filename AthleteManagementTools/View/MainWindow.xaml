@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1000">
     <Window.Resources>
         <ControlTemplate x:Key="SideBarButtonTemplate" TargetType="Button">
             <Border x:Name="border" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"
@@ -19,14 +19,9 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        <Style x:Key="SidebarButtonBorder" TargetType="Border">
-            <Setter Property="BorderBrush" Value="LightBlue"/>
-            <Setter Property="BorderThickness" Value="5"/>
-            <Setter Property="CornerRadius" Value="10"/>
-        </Style>
         <Style x:Key="SidebarButton" TargetType="Button">
             <Setter Property="Background" Value="LightBlue"/>
-            <Setter Property="Height" Value="45"/>
+            <Setter Property="Height" Value="80"/>
             <Setter Property="BorderBrush" Value="LightBlue"/>
             <Setter Property="Template" Value="{StaticResource SideBarButtonTemplate}"/>
         </Style>
@@ -36,31 +31,50 @@
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="80*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10,0,10,0">
-            <Button Style="{StaticResource SidebarButton}" Name="TrainingProgramBtn" Click="TrainingProgramBtn_OnClick">
-                <TextBlock Text="Training Program" Style="{StaticResource SidebarButtonText}"/>
+        <Grid Grid.Column="0" VerticalAlignment="Center" Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+               <RowDefinition/>
+               <RowDefinition/>
+               <RowDefinition/>
+               <RowDefinition/>
+               <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Style="{StaticResource SidebarButton}" Name="TrainingProgramBtn" Click="TrainingProgramBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Training Program" Style="{StaticResource SidebarButtonText}" VerticalAlignment="Center"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource SidebarButton}" Name="CrewSelectionBtn" Click="CrewSelectionBtn_OnClick">
-                <TextBlock Text="Crew Selection" Style="{StaticResource SidebarButtonText}"/>
+            <Button Grid.Row="1" Style="{StaticResource SidebarButton}" Name="CrewSelectionBtn" Click="CrewSelectionBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Crew Selection" Style="{StaticResource SidebarButtonText}"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource SidebarButton}" Name="ErgoSplitProfileBtn" Click="ErgoSplitProfileBtn_OnClick">
-                <TextBlock Text="Ergometer Split Profiling" Style="{StaticResource SidebarButtonText}" TextAlignment="Center"/>
+            <Button Grid.Row="2" Style="{StaticResource SidebarButton}" Name="ErgoSplitProfileBtn" Click="ErgoSplitProfileBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Erg Split Profiling" Style="{StaticResource SidebarButtonText}" TextAlignment="Center"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource SidebarButton}" Name="WeightProfileBtn" Click="WeightProfileBtn_OnClick">
-                <TextBlock Text="Weights Profiling" Style="{StaticResource SidebarButtonText}"/>
+            <Button Grid.Row="3" Style="{StaticResource SidebarButton}" Name="WeightProfileBtn" Click="WeightProfileBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Weights Profiling" Style="{StaticResource SidebarButtonText}"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource SidebarButton}" Name="SeatRacingBtn" Click="SeatRacingBtn_OnClick">
-                <TextBlock Text="Seat Racing" Style="{StaticResource SidebarButtonText}"/>
+            <Button Grid.Row="4" Style="{StaticResource SidebarButton}" Name="SeatRacingBtn" Click="SeatRacingBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Seat Racing" Style="{StaticResource SidebarButtonText}"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
             </Button>
-        </StackPanel>
+        </Grid>
         <StackPanel Grid.Column="1" Margin="10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -78,7 +92,7 @@
                 <ComboBoxItem Content="Novice Men"/>
                 <ComboBoxItem Content="Novice Women"/>
             </ComboBox>
-            <ListView Margin="20,25,20,0" ItemsSource="{Binding SquadList}">
+            <ListView Margin="20,25,20,0" ItemsSource="{Binding SquadList}" Name="SquadListBox">
                 <ListView.Resources>
                     <Style TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />

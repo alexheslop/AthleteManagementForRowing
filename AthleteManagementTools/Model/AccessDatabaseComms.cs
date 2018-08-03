@@ -1,83 +1,87 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Data;
 using System.Data.OleDb;
+using System.Windows;
 
-namespace RowerAthleteManagement.Model
+namespace AthleteManagementTools.Model
 {
-    public class AccessDatabaseComms
+    
+    public static class AccessDatabaseComms
     {
-        public List<Rower> ReadDatabase()
+        private static ObservableCollection<Rower> _rowerList;
+        public static ObservableCollection<Rower> ReadDatabase()
         {
-            var rowerList = new List<Rower>();
-            var queryString =
-                "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime FROM InitialTable";
-            var _con = new OleDbConnection
+            _rowerList = new ObservableCollection<Rower>();
+            var con = new OleDbConnection
             {
                 ConnectionString = ConfigurationManager
-                    .ConnectionStrings["RowerAthleteManagement.Properties.Settings.Sample_DatabaseConnectionString"]
+                    .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
                     .ToString()
             };
+            const string queryString = "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime FROM Athletes";
 
-            var command = new OleDbCommand(queryString, _con);
-            _con.Open();
+            var command = new OleDbCommand(queryString, con);
+            con.Open();
             var reader = command.ExecuteReader();
             while (reader != null && reader.Read())
             {
                 var newRower = new Rower
                 {
+                    FirstName = reader.GetString(0),
                     LastName = reader.GetString(1),
                     Squad = reader.GetString(2),
                     Side = reader.GetString(3),
                     CanScull = reader.GetBoolean(4),
-                    BowsideRank = reader.GetInt32(5),
-                    StrokesideRank = reader.GetInt32(6),
-                    ScullRank = reader.GetInt32(7),
-                    FirstName = reader.GetString(0)
+                    BowsideRank = reader.GetInt16(5),
+                    StrokesideRank = reader.GetInt16(6),
+                    ScullRank = reader.GetInt16(7),
+                    ErgTime = reader.GetDouble(8)
                 };
-                //newRower.ErgTime = reader.GetDouble(8);
-                rowerList.Add(newRower);
+                
+                _rowerList.Add(newRower);
             }
 
             reader?.Close();
-            _con.Close();
-            return rowerList;
+            con.Close();
+            return _rowerList;
         }
 
-        public bool WriteToDatabase()
+        public static bool WriteToDatabase(string firstName, string lastName, string squad, string side, bool canScull, int bowsideRank, int strokesideRank, int scullRank, double ergTime)
         {
-            _con = new OleDbConnection
+            var con = new OleDbConnection
             {
                 ConnectionString = ConfigurationManager
-                    .ConnectionStrings["RowerAthleteManagement.Properties.Settings.Sample_DatabaseConnectionString"]
+                    .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
                     .ToString()
             };
             var cmd = new OleDbCommand();
-            if (_con.State != ConnectionState.Open)
-                _con.Open();
-            cmd.Connection = _con;
-            var command = new OleDbCommand();
-            command.CommandText = "INSERT INTO [InitialTable](FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime)VALUES(@fnm, @lnm, @squad, @side, @canscull, @bowsiderank, @strokesiderank, @scullrank, @ergtime)";
-            command.Parameters.AddWithValue("@fnm", FirstNameTBox.Text);
-            command.Parameters.AddWithValue("@lnm", LastNameTBox.Text);
-            command.Parameters.AddWithValue("@squad", SquadComboBox.Text);
-            command.Parameters.AddWithValue("@side", SideComboBox.Text);
-            command.Parameters.AddWithValue("@canscull", CanScullCheckBox.IsChecked);
-            command.Parameters.AddWithValue("@bowsiderank", BowsideRankTBox.Text);
-            command.Parameters.AddWithValue("@strokesiderank", StrokesideRankTBox.Text);
-            command.Parameters.AddWithValue("@scullrank", ScullRankTBox.Text);
-            command.Parameters.AddWithValue("@ergtime", ErgTimeTBox.Text);
-
-            command.Connection = _con;
-
-
-            var a = command.ExecuteNonQuery();
-            if (a > 0)
+            if (con.State != ConnectionState.Open)
+                con.Open();
+            cmd.Connection = con;
+            var command = new OleDbCommand
             {
-                MessageBox.Show("Person added");
-            }
-            _con.Close();
+                CommandText =
+                    "INSERT INTO [Athletes](FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime)VALUES(@fnm, @lnm, @squad, @side, @canscull, @bowsiderank, @strokesiderank, @scullrank, @ergtime)"
+            };
+            command.Parameters.AddWithValue("@fnm", firstName);
+            command.Parameters.AddWithValue("@lnm", lastName);
+            command.Parameters.AddWithValue("@squad", squad);
+            command.Parameters.AddWithValue("@side", side);
+            command.Parameters.AddWithValue("@canscull", canScull);
+            command.Parameters.AddWithValue("@bowsiderank", bowsideRank);
+            command.Parameters.AddWithValue("@strokesiderank", strokesideRank);
+            command.Parameters.AddWithValue("@scullrank", scullRank);
+            command.Parameters.AddWithValue("@ergtime", ergTime);
 
-            DialogResult = true;
+            command.Connection = con;
+
+
+            command.ExecuteNonQuery();
+            con.Close();
+
+            return true;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Runtime.InteropServices;
+using System.Windows;
+using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
 {
@@ -9,6 +9,10 @@ namespace AthleteManagementTools.View
         public MainWindow()
         {
             InitializeComponent();
+            var mainViewModel = new MainViewModel();
+            DataContext = mainViewModel;
+
+
         }
 
         private void TrainingProgramBtn_OnClick(object sender, RoutedEventArgs e)
@@ -23,7 +27,12 @@ namespace AthleteManagementTools.View
 
         private void ErgoSplitProfileBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            var ergoSplitProfileDlg = new ErgSplitProfilingView();
+            ergoSplitProfileDlg.ShowDialog();
+            if (ergoSplitProfileDlg.DialogResult.HasValue && ergoSplitProfileDlg.DialogResult.Value)
+            {
+
+            }
         }
 
         private void WeightProfileBtn_OnClick(object sender, RoutedEventArgs e)
@@ -40,6 +49,10 @@ namespace AthleteManagementTools.View
         {
             var newAddPersonView = new AddPersonView();
             newAddPersonView.ShowDialog();
+            if (newAddPersonView.DialogResult.HasValue && newAddPersonView.DialogResult.Value)
+            {
+               ((MainViewModel) DataContext).RetrieveSquadUpdate();
+            }
         }
     }
 }

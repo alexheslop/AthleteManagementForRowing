@@ -4,9 +4,92 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AthleteManagementTools.View"
+        xmlns:viewModel ="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
-        Title="ErgSplitProfilingView" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance viewModel:ErgSplitProfilingViewModel }"
+        Title="Split Calculator" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" BorderThickness="2" BorderBrush="CornflowerBlue" Grid.ColumnSpan="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Individual Details" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Maximum Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Resting Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="2mmol/UT2 split" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Margin="7,3"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Margin="7,3"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Margin="7,3"/>
+                <Button Grid.Column="2" Grid.Row="3" Content="Generate Results" Margin="50,2"/>
+            </Grid>
+            
+            
+        </Border>
+        <ListView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="10" ItemsSource="{Binding TrainingZones}" HorizontalContentAlignment="Center">
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Zone" Width="120" DisplayMemberBinding="{Binding ZoneName}"/>
+                    <GridViewColumn Header="Split" Width="120" DisplayMemberBinding="{Binding Split}"/>
+                    <GridViewColumn Header="Watts" Width="120" DisplayMemberBinding="{Binding Watts}"/>
+                    <GridViewColumn Header="Heart Rate Lower" Width="120" DisplayMemberBinding="{Binding HrLower}"/>
+                    <GridViewColumn Header="Heart Rate Upper" Width="120" DisplayMemberBinding="{Binding HrUpper}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Column="0" Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Expected Tests" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="2000m:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="5000m:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="30 @ 20:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Margin="7,3" VerticalAlignment="Center">
+                <Run Text="{Binding Target2KTime}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding Target2K}"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="2" Margin="7,3"  VerticalAlignment="Center">
+                <Run Text="{Binding Target5KTime}"/>
+                <Run Text="/"/>
+                <Run Text="{Binding Target5K}"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding Target30R20}"/>
+        </Grid>
     </Grid>
 </Window>

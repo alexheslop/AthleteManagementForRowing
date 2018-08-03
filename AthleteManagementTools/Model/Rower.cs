@@ -14,10 +14,17 @@ namespace AthleteManagementTools.Model
         public int BowsideRank { get; set; }
         public int ScullRank { get; set; }
 
-        public Rower(string firstName, string lastName)
+        public Rower()
         {
-            FirstName = firstName;
-            LastName = lastName;
+            FirstName = "New";
+            LastName = "Rower";
+            Squad = "Senior Women";
+            Side = "Strokeside";
+            CanScull = true;
+            ErgTime = 400;
+            StrokesideRank = 0;
+            BowsideRank = 0;
+            ScullRank = 0;
         }
     }
 }
