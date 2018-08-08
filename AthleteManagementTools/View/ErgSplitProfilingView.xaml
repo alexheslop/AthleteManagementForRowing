@@ -38,10 +38,10 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Maximum Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Resting Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="2mmol/UT2 split" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Margin="7,3"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Margin="7,3"/>
-                <TextBox Grid.Column="1" Grid.Row="3" Margin="7,3"/>
-                <Button Grid.Column="2" Grid.Row="3" Content="Generate Results" Margin="50,2"/>
+                <TextBox Name="MaxHrBox"  Grid.Column="1" Grid.Row="1" Margin="7,3"/>
+                <TextBox Name="MinHrBox" Grid.Column="1" Grid.Row="2" Margin="7,3"/>
+                <TextBox Name="SplitBox" Grid.Column="1" Grid.Row="3" Margin="7,3"/>
+                <Button Name="GenerateResultsBtn" Grid.Column="2" Grid.Row="3" Content="Generate Results" Margin="50,2"  Click="GenerateResultsBtn_OnClick"/>
             </Grid>
             
             

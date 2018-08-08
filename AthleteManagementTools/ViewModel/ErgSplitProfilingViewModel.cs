@@ -85,6 +85,18 @@ namespace AthleteManagementTools.ViewModel
 
         }
 
+        public ErgSplitProfilingViewModel(double hrmax, double hrmin, string split)
+        {
+            TrainingZones = new ObservableCollection<TrainingZone>();
+            var splitCalc = new SplitCalculator(hrmax, hrmin, split);
+            TrainingZones = splitCalc.TrainingZoneList;
+            Target2K = splitCalc.Get2K();
+            Target5K = splitCalc.Get5K();
+            Target30R20 = splitCalc.Get30R20();
+            Target2KTime = splitCalc.Get2KTime();
+            Target5KTime = splitCalc.Get5KTime();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
