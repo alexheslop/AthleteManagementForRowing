@@ -1,27 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
 {
-    /// <summary>
-    /// Interaction logic for WeightsProfilingView.xaml
-    /// </summary>
-    public partial class WeightsProfilingView : Window
+    public partial class WeightsProfilingView
     {
         public WeightsProfilingView()
         {
             InitializeComponent();
+            var viewModel = new WeightsProfilingViewModel();
+            DataContext = viewModel;
+            StandardsData.Visibility = Visibility.Hidden;
+            StandardsCharting.Visibility = Visibility.Hidden;
+        }
+
+        private void UpdateScoreGraphBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            ComparisonGraph.Series.Clear();
+            var seriesList = ((WeightsProfilingViewModel) DataContext).UpdateActualForRadarComparisonGraph();
+            foreach (var series in seriesList)
+            {
+                ComparisonGraph.Series.Add(series);
+            }
+        }
+
+        private void CalcStandardsBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            StandardsData.Visibility = Visibility.Visible;
+            StandardsCharting.Visibility = Visibility.Visible;
+            ComparisonGraph.Series.Clear();
+            var seriesList = ((WeightsProfilingViewModel)DataContext).UpdateActualForRadarComparisonGraph();
+            foreach (var series in seriesList)
+            {
+                ComparisonGraph.Series.Add(series);
+            }
         }
     }
 }
