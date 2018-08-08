@@ -1,12 +1,93 @@
-﻿<Window x:Class="AthleteManagementTools.View.WeightsProfilingView"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AthleteManagementTools.View"
+        xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" x:Class="AthleteManagementTools.View.WeightsProfilingView"
         mc:Ignorable="d"
-        Title="WeightsProfilingView" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance {x:Type viewModel:WeightsProfilingViewModel}}"
+        Title="Weights Profiling - Athlete Management" Height="600" Width="1000">
+    <Window.DataContext>
+        <viewModel:WeightsProfilingViewModel/>
+    </Window.DataContext>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="65*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" >
+            <TextBlock Text="Personal Details" FontSize="14" FontWeight="DemiBold" Padding="5"/>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Bodyweight" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding BodyWeight, Mode=TwoWay}"/>
+            </Grid>
+            <Button HorizontalAlignment="Right" Margin="10" Name="CalcStandardsBtn" Click="CalcStandardsBtn_OnClick">
+                <TextBlock Text="Calculate Standards"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Name="StandardsData">
+            <TextBlock Text="Standards" FontSize="14" FontWeight="DemiBold" Padding="5"/>
+            <ListView ItemsSource="{Binding WeightStandards}" >
+                <ListView.View>
+                    <GridView >
+                        <GridViewColumn Header="Class" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                        <GridViewColumn Header="1 Rep Max" DisplayMemberBinding="{Binding OneRepMax}" Width="90"/>
+                        <GridViewColumn Header="3 x 5" DisplayMemberBinding="{Binding ThreeRep}" Width="90"/>
+                        <GridViewColumn Header="5 x 5" DisplayMemberBinding="{Binding FiveRep}" Width="90"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TextBlock Text="Current Scores" FontSize="14" FontWeight="DemiBold" Padding="5"/>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Weight Class" Width="100"/>
+                <TextBlock Text="1 Rep Max" Width="100" Margin="0,0,30,0" TextAlignment="Center"/>
+                <TextBlock Text="3 x 5" Width="100" Margin="0,0,30,0" TextAlignment="Center"/>
+                <TextBlock Text="5 x 5" Width="100" Margin="0,0,30,0" TextAlignment="Center"/>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding WeightActual}" Padding="5">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Width="100"/>
+                            <TextBox Text="{Binding OneRepMax, Mode=TwoWay}" Margin="0,0,25,0" TextAlignment="Right" Width="100"/>
+                            <TextBox Text="{Binding ThreeRep, Mode=TwoWay}" Margin="0,0,25,0" TextAlignment="Right" Width="100"/>
+                            <TextBox Text="{Binding FiveRep, Mode=TwoWay}" Margin="0,0,25,0" TextAlignment="Right" Width="100"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Click="UpdateScoreGraphBtn_OnClick" Margin="15" HorizontalAlignment="Center">
+                <TextBlock Text="Update Scores"/>
+            </Button>
+        </StackPanel>
         
+        <StackPanel Grid.Column="1" Grid.Row="1" Name="StandardsCharting">
+            <TextBlock Text="Current vs Target" FontSize="14" FontWeight="DemiBold" Padding="5"/>
+
+            <dxc:ChartControl AnimationMode="OnLoad" ToolTipEnabled="True">
+                <dxc:ChartControl.Legends>
+                    <dxc:Legend/>
+                </dxc:ChartControl.Legends>
+                <dxc:RadarDiagram2D Name="ComparisonGraph"/>
+            </dxc:ChartControl>
+
+        </StackPanel>
     </Grid>
 </Window>

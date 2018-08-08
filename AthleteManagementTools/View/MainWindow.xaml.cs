@@ -37,7 +37,12 @@ namespace AthleteManagementTools.View
 
         private void WeightProfileBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            var weightProfileDlg = new WeightsProfilingView();
+            weightProfileDlg.ShowDialog();
+            if (weightProfileDlg.DialogResult.HasValue && weightProfileDlg.DialogResult.Value)
+            {
+
+            }
         }
 
         private void SeatRacingBtn_OnClick(object sender, RoutedEventArgs e)
