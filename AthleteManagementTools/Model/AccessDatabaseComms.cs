@@ -48,7 +48,7 @@ namespace AthleteManagementTools.Model
             return _rowerList;
         }
 
-        public static bool WriteToDatabase(string firstName, string lastName, string squad, string side, bool canScull, int bowsideRank, int strokesideRank, int scullRank, double ergTime)
+        public static bool WritePersonToDatabase(string firstName, string lastName, string squad, string side, bool canScull, int bowsideRank, int strokesideRank, int scullRank, double ergTime)
         {
             var con = new OleDbConnection
             {
@@ -74,6 +74,71 @@ namespace AthleteManagementTools.Model
             command.Parameters.AddWithValue("@strokesiderank", strokesideRank);
             command.Parameters.AddWithValue("@scullrank", scullRank);
             command.Parameters.AddWithValue("@ergtime", ergTime);
+
+            command.Connection = con;
+
+
+            command.ExecuteNonQuery();
+            con.Close();
+
+            return true;
+        }
+
+        public static ObservableCollection<Boat> ReadBoatFromDatabase()
+        {
+            var boatCollection = new ObservableCollection<Boat>();
+            var con = new OleDbConnection
+            {
+                ConnectionString = ConfigurationManager
+                    .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
+                    .ToString()
+            };
+            const string queryString = "SELECT BoatName,Seats,Cox,Scull,classRank FROM Boats";
+
+            var command = new OleDbCommand(queryString, con);
+            con.Open();
+            var reader = command.ExecuteReader();
+            while (reader != null && reader.Read())
+            {
+                var newRower = new Boat
+                {
+                    BoatName = reader.GetString(0),
+                    Seats = reader.GetInt16(1),
+                    Cox = reader.GetBoolean(2),
+                    Scull = reader.GetBoolean(3),
+                    ClassRank = reader.GetInt16(4),
+                };
+
+                boatCollection.Add(newRower);
+            }
+
+            reader?.Close();
+            con.Close();
+            return boatCollection;
+        }
+
+        public static bool WriteBoatToDatabase(string boatName, int seats, bool cox, bool scull, int classRank)
+        {
+            var con = new OleDbConnection
+            {
+                ConnectionString = ConfigurationManager
+                    .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
+                    .ToString()
+            };
+            var cmd = new OleDbCommand();
+            if (con.State != ConnectionState.Open)
+                con.Open();
+            cmd.Connection = con;
+            var command = new OleDbCommand
+            {
+                CommandText =
+                    "INSERT INTO [Boats](BoatName,Seats,Cox,Scull,classRank)VALUES(@bnm, @seat, @cox, @scull, @clRank)"
+            };
+            command.Parameters.AddWithValue("@bnm", boatName);
+            command.Parameters.AddWithValue("@seat", seats);
+            command.Parameters.AddWithValue("@cox", cox);
+            command.Parameters.AddWithValue("@scull", scull);
+            command.Parameters.AddWithValue("@clRank", classRank);
 
             command.Connection = con;
 

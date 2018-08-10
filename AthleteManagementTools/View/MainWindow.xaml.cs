@@ -22,7 +22,12 @@ namespace AthleteManagementTools.View
 
         private void CrewSelectionBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            var crewSelectionDlg = new CrewSelectionView();
+            crewSelectionDlg.ShowDialog();
+            if (crewSelectionDlg.DialogResult.HasValue && crewSelectionDlg.DialogResult.Value)
+            {
+
+            }
         }
 
         private void ErgoSplitProfileBtn_OnClick(object sender, RoutedEventArgs e)
@@ -39,6 +44,7 @@ namespace AthleteManagementTools.View
         {
             var weightProfileDlg = new WeightsProfilingView();
             weightProfileDlg.ShowDialog();
+            
             if (weightProfileDlg.DialogResult.HasValue && weightProfileDlg.DialogResult.Value)
             {
 

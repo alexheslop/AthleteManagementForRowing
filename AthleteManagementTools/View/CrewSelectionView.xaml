@@ -3,10 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
         xmlns:local="clr-namespace:AthleteManagementTools.View"
         mc:Ignorable="d"
         Title="CrewSelectionView" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModel:CrewSelectionViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False">
+            <Button DockPanel.Dock="Right" Margin="25" Click="AddBoatBtn_OnClick">
+                <TextBlock Text="Add Boat.."/>
+            </Button>
+        </DockPanel>
+        <ComboBox Grid.Row="1" ItemsSource="{Binding BoatList}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding BoatName}"/>
+                        <TextBlock ></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 </Window>

@@ -82,9 +82,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IBoat.cs" />
     <Compile Include="Interfaces\IRower.cs" />
     <Compile Include="Interfaces\IWeightClass.cs" />
     <Compile Include="Model\AccessDatabaseComms.cs" />
+    <Compile Include="Model\Boat.cs" />
     <Compile Include="Model\Coxswain.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="Model\ErgTestScorePredictor.cs" />
@@ -100,6 +102,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RowingDatabaseDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AddBoatViewModel.cs" />
     <Compile Include="ViewModel\AddPersonViewModel.cs" />
     <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
@@ -109,6 +112,9 @@
     <Compile Include="Model\TimeToSplitConverter.cs" />
     <Compile Include="ViewModel\TrainingProgramViewModel.cs" />
     <Compile Include="ViewModel\WeightsProfilingViewModel.cs" />
+    <Compile Include="View\AddBoatView.xaml.cs">
+      <DependentUpon>AddBoatView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddPersonView.xaml.cs">
       <DependentUpon>AddPersonView.xaml</DependentUpon>
     </Compile>
@@ -127,6 +133,10 @@
     <Compile Include="View\WeightsProfilingView.xaml.cs">
       <DependentUpon>WeightsProfilingView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddBoatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddPersonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
