@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AthleteManagementTools.View"
+        xmlns:dataValid="clr-namespace:AthleteManagementTools.ValidationRules"
         xmlns:viewModel ="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:ErgSplitProfilingViewModel }"
-        Title="Split Calculator" Height="450" Width="800">
-    <Grid>
+        Title="Split Calculator" Height="450" Width="800" MouseDown="Window_MouseDown">
+    <Grid Name="GeneralGrid" Focusable="True">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -62,7 +63,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Grid Grid.Column="0" Grid.Row="3">
+        <Grid Grid.Column="0" Grid.Row="3" Focusable="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -80,16 +81,49 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="5000m:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <TextBlock Grid.Column="0" Grid.Row="3" Text="30 @ 20:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <TextBlock Grid.Column="1" Grid.Row="1" Margin="7,3" VerticalAlignment="Center">
-                <Run Text="{Binding Target2KTime}"/>
+                <Run Text="{Binding Predicted2KTime}"/>
                 <Run Text="/"/>
-                <Run Text="{Binding Target2K}"/>
+                <Run Text="{Binding Predicted2K}"/>
             </TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="2" Margin="7,3"  VerticalAlignment="Center">
-                <Run Text="{Binding Target5KTime}"/>
+                <Run Text="{Binding Predicted5KTime}"/>
                 <Run Text="/"/>
-                <Run Text="{Binding Target5K}"/>
+                <Run Text="{Binding Predicted5K}"/>
             </TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding Target30R20}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding Predicted30R20}"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="3" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Test Calculator" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Enter test score to find UT2" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Column="0" Grid.Row="1" Name="ComboBox" Text="{Binding SplitType, Mode=OneWayToSource}">
+                <ComboBoxItem Content="2000m" HorizontalContentAlignment="Right"/>
+                <ComboBoxItem Content="5000m" HorizontalContentAlignment="Right"/>
+                <ComboBoxItem Content="30 @ 20 (/500m)" HorizontalContentAlignment="Right"/>
+            </ComboBox>
+            <TextBox Name="ThirtyAtTwentyBox" Grid.Column="1" Grid.Row="1" Margin="7,3">
+                <TextBox.Text>
+                    <Binding Path="TargetSplit" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <dataValid:StringToIntValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="2" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Right" Text="UT2 Split:"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding TargetUT2}"/>
         </Grid>
     </Grid>
 </Window>
