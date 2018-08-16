@@ -8,57 +8,58 @@ namespace AthleteManagementTools.ViewModel
 {
     public class ErgSplitProfilingViewModel :INotifyPropertyChanged
     {
-        private string _target5K;
-        public string Target5K {
-            get => _target5K;
+        public string Ut2Split { get; set; }
+        private string _predicted5K;
+        public string Predicted5K {
+            get => _predicted5K;
             set
             {
-                _target5K = value;
+                _predicted5K = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(nameof(Target5K));
+                OnPropertyChanged(nameof(Predicted5K));
             }
         }
-        private string _target30R20;
-        public string Target30R20 {
-            get => _target30R20;
+        private string _predicted30R20;
+        public string Predicted30R20 {
+            get => _predicted30R20;
             set
             {
-                _target30R20 = value;
+                _predicted30R20 = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(nameof(Target30R20));
+                OnPropertyChanged(nameof(Predicted30R20));
             }
         }
-        private string _target2K;
-        public string Target2K
+        private string _predicted2K;
+        public string Predicted2K
         {
-            get => _target2K;
+            get => _predicted2K;
             set
             {
-                _target2K = value;
+                _predicted2K = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(nameof(Target2K));
+                OnPropertyChanged(nameof(Predicted2K));
             }
         }
-        private string _target2KTime;
-        public string Target2KTime
+        private string _predicted2KTime;
+        public string Predicted2KTime
         {
-            get => _target2KTime;
+            get => _predicted2KTime;
             set
             {
-                _target2KTime = value;
+                _predicted2KTime = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(nameof(Target2KTime));
+                OnPropertyChanged(nameof(Predicted2KTime));
             }
         }
-        private string _target5KTime;
-        public string Target5KTime
+        private string _predicted5KTime;
+        public string Predicted5KTime
         {
-            get => _target5KTime;
+            get => _predicted5KTime;
             set
             {
-                _target5KTime = value;
+                _predicted5KTime = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(nameof(Target5KTime));
+                OnPropertyChanged(nameof(Predicted5KTime));
             }
         }
         private ObservableCollection<TrainingZone> _trainingZones;
@@ -71,30 +72,79 @@ namespace AthleteManagementTools.ViewModel
                 OnPropertyChanged(nameof(TrainingZones));
             }
         }
+        private string _targetSplit;
+        public string TargetSplit
+        {
+            get => _targetSplit;
+            set
+            {
+                _targetSplit = value;
+                var splitCalc = new SplitCalculator(210, 55, _targetSplit, false);
+                //Find value of combo box and calculate TargetUT2
+                switch (SplitType)
+                {
+                    case "2000m":
+                        TargetUt2 = splitCalc.UT2From2k;
+                        break;
+                    case "5000m":
+                        TargetUt2 = splitCalc.UT2From5k;
+                        break;
+                    default:
+                        TargetUt2 = splitCalc.UT2From3020;
+                        break;
+                }
+                OnPropertyChanged(nameof(TargetSplit));
+            }
+        }
+        private string _targetUt2;
+        public string TargetUt2
+        {
+            get => _targetUt2;
+            set
+            {
+                _targetUt2 = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged(nameof(TargetUt2));
+            }
+        }
+        private string _splitType;
+        public string SplitType
+        {
+            get => _splitType;
+            set
+            {
+                _splitType = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged(nameof(SplitType));
+            }
+        }
+
+
+
+
 
         public ErgSplitProfilingViewModel()
         {
             TrainingZones = new ObservableCollection<TrainingZone>();
-            var splitCalc = new SplitCalculator(210, 55, "2:00.0");
+            var splitCalc = new SplitCalculator(200, 55, "2:00.0", true);
             TrainingZones = splitCalc.TrainingZoneList;
-            Target2K = splitCalc.Get2K();
-            Target5K = splitCalc.Get5K();
-            Target30R20 = splitCalc.Get30R20();
-            Target2KTime = splitCalc.Get2KTime();
-            Target5KTime = splitCalc.Get5KTime();
-
+            Predicted2K = splitCalc.Get2K();
+            Predicted5K = splitCalc.Get5K();
+            Predicted30R20 = splitCalc.Get30R20();
+            Predicted2KTime = splitCalc.Get2KTime();
+            Predicted5KTime = splitCalc.Get5KTime();
         }
 
         public ErgSplitProfilingViewModel(double hrmax, double hrmin, string split)
         {
             TrainingZones = new ObservableCollection<TrainingZone>();
-            var splitCalc = new SplitCalculator(hrmax, hrmin, split);
+            var splitCalc = new SplitCalculator(hrmax, hrmin, split, true);
             TrainingZones = splitCalc.TrainingZoneList;
-            Target2K = splitCalc.Get2K();
-            Target5K = splitCalc.Get5K();
-            Target30R20 = splitCalc.Get30R20();
-            Target2KTime = splitCalc.Get2KTime();
-            Target5KTime = splitCalc.Get5KTime();
+            Predicted2K = splitCalc.Get2K();
+            Predicted5K = splitCalc.Get5K();
+            Predicted30R20 = splitCalc.Get30R20();
+            Predicted2KTime = splitCalc.Get2KTime();
+            Predicted5KTime = splitCalc.Get5KTime();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

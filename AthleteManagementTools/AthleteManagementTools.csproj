@@ -104,6 +104,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RowingDatabaseDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ValidationRules\DateValidation.cs" />
     <Compile Include="ViewModel\AddBoatViewModel.cs" />
     <Compile Include="ViewModel\AddPersonViewModel.cs" />
     <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
