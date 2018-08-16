@@ -83,12 +83,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IBoat.cs" />
+    <Compile Include="Interfaces\ICrew.cs" />
     <Compile Include="Interfaces\IRower.cs" />
     <Compile Include="Interfaces\IWeightClass.cs" />
     <Compile Include="Model\AccessDatabaseComms.cs" />
     <Compile Include="Model\Boat.cs" />
     <Compile Include="Model\Coxswain.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
+    <Compile Include="Model\Crew.cs" />
     <Compile Include="Model\ErgTestScorePredictor.cs" />
     <Compile Include="Model\Rower.cs" />
     <Compile Include="Model\SplitCalculator.cs" />
