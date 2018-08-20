@@ -7,6 +7,41 @@
         mc:Ignorable="d"
         Title="TrainingProgramView" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Training Program" Margin="15"/>
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Text="Monday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
+            <TextBlock Text="Tuesday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0"/>
+            <TextBlock Text="Wednesday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="0"/>
+            <TextBlock Text="Thursday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="0"/>
+            <TextBlock Text="Friday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="5" Grid.Row="0"/>
+            <TextBlock Text="Saturday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Grid.Row="0"/>
+            <TextBlock Text="Sunday" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="7" Grid.Row="0"/>
+            <TextBlock Text="Session 1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="Session 2" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+            <TextBlock Text="Session 3" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+        </Grid>
         
     </Grid>
 </Window>

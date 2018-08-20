@@ -106,11 +106,13 @@
     <Compile Include="ViewModel\AddBoatViewModel.cs" />
     <Compile Include="ViewModel\AddPersonViewModel.cs" />
     <Compile Include="ViewModel\CrewSelectionViewModel.cs" />
+    <Compile Include="ViewModel\EditRowerViewModel.cs" />
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SeatRacingViewModel.cs" />
     <Compile Include="Model\TimeToSplitConverter.cs" />
+    <Compile Include="ViewModel\SelectAthleteViewModel.cs" />
     <Compile Include="ViewModel\TrainingProgramViewModel.cs" />
     <Compile Include="ViewModel\WeightsProfilingViewModel.cs" />
     <Compile Include="View\AddBoatView.xaml.cs">
@@ -119,14 +121,23 @@
     <Compile Include="View\AddPersonView.xaml.cs">
       <DependentUpon>AddPersonView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AthleteZoneView.xaml.cs">
+      <DependentUpon>AthleteZoneView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CrewSelectionView.xaml.cs">
       <DependentUpon>CrewSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditRowerView.xaml.cs">
+      <DependentUpon>EditRowerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ErgSplitProfilingView.xaml.cs">
       <DependentUpon>ErgSplitProfilingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SeatRacingView.xaml.cs">
       <DependentUpon>SeatRacingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectAthleteView.xaml.cs">
+      <DependentUpon>SelectAthleteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TrainingProgramView.xaml.cs">
       <DependentUpon>TrainingProgramView.xaml</DependentUpon>
@@ -142,7 +153,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AthleteZoneView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CrewSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditRowerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +182,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\SeatRacingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectAthleteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

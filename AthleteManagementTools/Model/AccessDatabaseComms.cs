@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
@@ -7,11 +7,33 @@ using System.Windows;
 
 namespace AthleteManagementTools.Model
 {
-    
     public static class AccessDatabaseComms
     {
         private static ObservableCollection<Rower> _rowerList;
-        public static ObservableCollection<Rower> ReadDatabase()
+
+        public static ObservableCollection<Rower> SelectSquad(string squad)
+        {
+            var newstring = "";
+            if (squad == "All")
+            {
+                newstring = "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes";
+            }
+            else if (squad == "Seniors" || squad == "Novices")
+            {
+                squad = squad.Remove(squad.Length - 1);
+                newstring =
+                    $"SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes WHERE Squad LIKE '{squad}%'";
+            }
+            
+            else
+            {
+                newstring = $"SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes WHERE Squad = '{squad}'";
+            }
+            
+            var athleteList = ReadAthleteDatabase(newstring);
+            return athleteList;
+        }
+        private static ObservableCollection<Rower> ReadAthleteDatabase(string sqlQuery)
         {
             _rowerList = new ObservableCollection<Rower>();
             var con = new OleDbConnection
@@ -20,26 +42,28 @@ namespace AthleteManagementTools.Model
                     .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
                     .ToString()
             };
-            const string queryString = "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime FROM Athletes";
 
-            var command = new OleDbCommand(queryString, con);
+            var command = new OleDbCommand(sqlQuery, con);
             con.Open();
             var reader = command.ExecuteReader();
+            
             while (reader != null && reader.Read())
             {
-                var newRower = new Rower
-                {
-                    FirstName = reader.GetString(0),
-                    LastName = reader.GetString(1),
-                    Squad = reader.GetString(2),
-                    Side = reader.GetString(3),
-                    CanScull = reader.GetBoolean(4),
-                    BowsideRank = reader.GetInt16(5),
-                    StrokesideRank = reader.GetInt16(6),
-                    ScullRank = reader.GetInt16(7),
-                    ErgTime = reader.GetDouble(8)
-                };
-                
+                var newRower = new Rower();
+                newRower.FirstName = reader.GetString(0);
+                newRower.LastName = reader.GetString(1);
+                newRower.Squad = reader.GetString(2);
+                newRower.Side = reader.GetString(3);
+                newRower.CanScull = reader.GetBoolean(4);
+                newRower.BowsideRank = reader.GetInt16(5);
+                newRower.StrokesideRank = reader.GetInt16(6);
+                newRower.ScullRank = reader.GetInt16(7);
+                newRower.Pb2K = reader.GetString(8);
+                newRower.Pb5K = reader.GetString(9);
+                newRower.Pb30R20 = reader.GetString(10);
+                newRower.Ut2Split = reader.GetString(11);
+                newRower.MaxHr = reader.GetInt16(12);
+                newRower.MinHr = reader.GetInt16(13);
                 _rowerList.Add(newRower);
             }
 
@@ -48,7 +72,8 @@ namespace AthleteManagementTools.Model
             return _rowerList;
         }
 
-        public static bool WritePersonToDatabase(string firstName, string lastName, string squad, string side, bool canScull, int bowsideRank, int strokesideRank, int scullRank, double ergTime)
+        public static bool WritePersonToDatabase(string firstName, string lastName, string squad, string side, bool canScull,
+            int bowsideRank, int strokesideRank, int scullRank, string pb2K, string pb5K, string pb30R20, string ut2Split)
         {
             var con = new OleDbConnection
             {
@@ -63,7 +88,7 @@ namespace AthleteManagementTools.Model
             var command = new OleDbCommand
             {
                 CommandText =
-                    "INSERT INTO [Athletes](FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,ErgTime)VALUES(@fnm, @lnm, @squad, @side, @canscull, @bowsiderank, @strokesiderank, @scullrank, @ergtime)"
+                    "INSERT INTO [Athletes](FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k, PB30r20, UT2Split)VALUES(@fnm, @lnm, @squad, @side, @canscull, @bowsiderank, @strokesiderank, @scullrank, @pb2k, @pb5k, @pb30r20, @Ut2split)"
             };
             command.Parameters.AddWithValue("@fnm", firstName);
             command.Parameters.AddWithValue("@lnm", lastName);
@@ -73,8 +98,11 @@ namespace AthleteManagementTools.Model
             command.Parameters.AddWithValue("@bowsiderank", bowsideRank);
             command.Parameters.AddWithValue("@strokesiderank", strokesideRank);
             command.Parameters.AddWithValue("@scullrank", scullRank);
-            command.Parameters.AddWithValue("@ergtime", ergTime);
-
+            command.Parameters.AddWithValue("@pb2k", pb2K);
+            command.Parameters.AddWithValue("@pb5k", pb5K);
+            command.Parameters.AddWithValue("@pb30r20", pb30R20);
+            command.Parameters.AddWithValue("@Ut2split", ut2Split);
+            
             command.Connection = con;
 
 
@@ -134,7 +162,7 @@ namespace AthleteManagementTools.Model
                 CommandText =
                     "INSERT INTO [Boats](BoatName,Seats,Cox,Scull,classRank)VALUES(@bnm, @seat, @cox, @scull, @clRank)"
             };
-            command.Parameters.AddWithValue("@bnm", boatName);
+            //command.Parameters.AddWithValue("@bnm", boatName);
             command.Parameters.AddWithValue("@seat", seats);
             command.Parameters.AddWithValue("@cox", cox);
             command.Parameters.AddWithValue("@scull", scull);
@@ -147,6 +175,139 @@ namespace AthleteManagementTools.Model
             con.Close();
 
             return true;
+        }
+
+        public static bool UpdateRowerFromErgProfile(string firstName, string lastName, string pb2K, string pb5K, string pb30R20, string ut2Split, int maxHr, int minHr)
+        {
+            var connectionString = ConfigurationManager
+                .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
+                .ToString();
+
+            using (var connection = new OleDbConnection(connectionString))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    "UPDATE Athletes SET PB2k = ?, PB5k = ?, PB30r20 = ?, UT2Split = ?, MaxHR = ?, MinHR = ? WHERE FirstName = ? and LastName = ?";
+
+                var p1 = command.CreateParameter();
+                p1.Value = pb2K;
+                command.Parameters.Add(p1);
+
+                var p2 = command.CreateParameter();
+                p2.Value = pb5K;
+                command.Parameters.Add(p2);
+
+                var p3 = command.CreateParameter();
+                p3.Value = pb30R20;
+                command.Parameters.Add(p3);
+
+                var p4 = command.CreateParameter();
+                p4.Value = ut2Split;
+                command.Parameters.Add(p4);
+                
+                var p5 = command.CreateParameter();
+                p5.Value = maxHr;
+                command.Parameters.Add(p5);
+
+                var p6 = command.CreateParameter();
+                p6.Value = minHr;
+                command.Parameters.Add(p6);
+
+                var p7 = command.CreateParameter();
+                p7.Value = firstName;
+                command.Parameters.Add(p7);
+
+                var p8 = command.CreateParameter();
+                p8.Value = lastName;
+                command.Parameters.Add(p8);
+
+                /*var result = $"Records affected: {command.ExecuteNonQuery()}";
+                MessageBox.Show(result);*/
+            }
+            return false;
+        }
+
+        public static bool UpdateRowerFromDetails(string firstName, string lastName, string squad, string side,
+            bool canScull, int bowsideRank, int strokesideRank, int scullRank)
+        {
+            var connectionString = ConfigurationManager
+                .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
+                .ToString();
+
+            using (var connection = new OleDbConnection(connectionString))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    "UPDATE Athletes SET Squad = ?, Side = ?, CanScull = ?, BowsideRank = ?, StrokesideRank = ?, ScullRank = ? WHERE FirstName = ? and LastName = ?";
+
+                var p1 = command.CreateParameter();
+                p1.Value = squad;
+                command.Parameters.Add(p1);
+
+                var p2 = command.CreateParameter();
+                p2.Value = side;
+                command.Parameters.Add(p2);
+
+                var p3 = command.CreateParameter();
+                p3.Value = canScull;
+                command.Parameters.Add(p3);
+
+                var p4 = command.CreateParameter();
+                p4.Value = bowsideRank;
+                command.Parameters.Add(p4);
+
+                var p5 = command.CreateParameter();
+                p5.Value = strokesideRank;
+                command.Parameters.Add(p5);
+
+                var p6 = command.CreateParameter();
+                p6.Value = scullRank;
+                command.Parameters.Add(p6);
+
+                var p7 = command.CreateParameter();
+                p7.Value = firstName;
+                command.Parameters.Add(p7);
+
+                var p8 = command.CreateParameter();
+                p8.Value = lastName;
+                command.Parameters.Add(p8);
+
+                /*var result = $"Records affected: {command.ExecuteNonQuery()}";
+                MessageBox.Show(result);*/
+            }
+            return false;
+        }
+
+        public static bool RemoveRowerFromDatabase(string firstName, string lastName)
+        {
+            var connectionString = ConfigurationManager
+                .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
+                .ToString();
+
+            using (var connection = new OleDbConnection(connectionString))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    "DELETE FROM Athletes WHERE FirstName = ? and LastName = ?";
+
+                var p1 = command.CreateParameter();
+                p1.Value = firstName;
+                command.Parameters.Add(p1);
+
+                var p2 = command.CreateParameter();
+                p2.Value = lastName;
+                command.Parameters.Add(p2);
+
+                /*var result = $"Records affected: {command.ExecuteNonQuery()}";
+                MessageBox.Show(result);*/
+            }
+            return false;
         }
     }
 }

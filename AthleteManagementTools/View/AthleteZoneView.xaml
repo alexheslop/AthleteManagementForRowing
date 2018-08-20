@@ -1,0 +1,19 @@
+﻿<Window x:Class="AthleteManagementTools.View.AthleteZoneView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AthleteManagementTools.View"
+        mc:Ignorable="d"
+        Title="AthleteZoneView" Height="200" Width="200">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" >
+            <Button Name="ErgSplitBtn" Click="ErgSplitBtn_OnClick" Margin="10">
+                <TextBlock Text="Erg splits"/>
+            </Button>
+            <Button Name="WeightsBtn" Click="WeightsBtn_OnClick" Margin="10">
+                <TextBlock Text="Weights"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

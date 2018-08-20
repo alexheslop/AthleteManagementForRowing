@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 
 namespace AthleteManagementTools.Model
 {
@@ -21,6 +20,10 @@ namespace AthleteManagementTools.Model
         public static double ConvertSplitToSeconds(string split)
         {
             double total = 0;
+            if (split == "0")
+            {
+                split = "0:00.0";
+            }
             try
             {
                 var time = DateTime.ParseExact(split, "m:ss.f", null);

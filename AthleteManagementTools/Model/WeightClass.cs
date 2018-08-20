@@ -1,5 +1,4 @@
-﻿using System.Security.Principal;
-using AthleteManagementTools.Interfaces;
+﻿using AthleteManagementTools.Interfaces;
 
 namespace AthleteManagementTools.Model
 {

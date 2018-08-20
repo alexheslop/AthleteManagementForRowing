@@ -32,9 +32,6 @@ namespace AthleteManagementTools.Model
                 UT2From5k = GetUT2From5k(split);
                 UT2From3020 = GetUT2From3020(split);
             }
-            
-            
-            
         }
 
         private string GetUT2From3020(string split)

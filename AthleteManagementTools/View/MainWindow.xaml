@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel}"
-        Title="MainWindow" Height="650" Width="1000">
+        Title="Athlete Management" Height="650" Width="1000">
     <Window.Resources>
         <ControlTemplate x:Key="SideBarButtonTemplate" TargetType="Button">
             <Border x:Name="border" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"
@@ -42,7 +42,6 @@
                <RowDefinition/>
                <RowDefinition/>
                <RowDefinition/>
-               <RowDefinition/>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Style="{StaticResource SidebarButton}" Name="TrainingProgramBtn" Click="TrainingProgramBtn_OnClick">
                 <StackPanel Orientation="Horizontal">
@@ -56,21 +55,16 @@
                     <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button Grid.Row="2" Style="{StaticResource SidebarButton}" Name="ErgoSplitProfileBtn" Click="ErgoSplitProfileBtn_OnClick">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Erg Split Profiling" Style="{StaticResource SidebarButtonText}" TextAlignment="Center"/>
-                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <Button Grid.Row="3" Style="{StaticResource SidebarButton}" Name="WeightProfileBtn" Click="WeightProfileBtn_OnClick">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Weights Profiling" Style="{StaticResource SidebarButtonText}"/>
-                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <Button Grid.Row="4" Style="{StaticResource SidebarButton}" Name="SeatRacingBtn" Click="SeatRacingBtn_OnClick">
+            
+            <Button Grid.Row="2" Style="{StaticResource SidebarButton}" Name="SeatRacingBtn" Click="SeatRacingBtn_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Seat Racing" Style="{StaticResource SidebarButtonText}"/>
+                    <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="3" Style="{StaticResource SidebarButton}" Name="AthleteZoneBtn" Click="AthleteZoneBtn_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Athlete Zone" Style="{StaticResource SidebarButtonText}"/>
                     <Polygon Style="{StaticResource Chevron}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
@@ -86,7 +80,12 @@
                     <TextBlock Text="Add Personnel..."/>
                 </Button>
             </Grid>
-            <ComboBox Margin="15,25,15,0" HorizontalAlignment="Center" MinWidth="250">
+            <ComboBox Name="SquadSelect"  Margin="15,25,15,0" HorizontalAlignment="Center" MinWidth="250" SelectionChanged="SquadSelect_OnSelectionChanged">
+                <ComboBoxItem Content="All" IsSelected="True"/>
+                <Separator/>
+                <ComboBoxItem Content="Seniors"/>
+                <ComboBoxItem Content="Novices"/>
+                <Separator/>
                 <ComboBoxItem Content="Senior Men"/>
                 <ComboBoxItem Content="Senior Women"/>
                 <ComboBoxItem Content="Novice Men"/>
@@ -97,7 +96,16 @@
                     <Style TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
                     </Style>
+                    <ContextMenu x:Key="RowerMenu">
+                        <MenuItem Name="EditPersonBtn" Header="Edit Person..." Click="EditPersonBtn_OnClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                        <MenuItem Name="DeletePersonBtn" Header="Remove Person" Click="DeleteRower_OnClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+                    </ContextMenu>
                 </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="ContextMenu" Value="{StaticResource RowerMenu}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="First Name" Width="80" DisplayMemberBinding="{Binding FirstName}" />

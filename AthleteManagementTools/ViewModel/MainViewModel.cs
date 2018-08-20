@@ -22,12 +22,18 @@ namespace AthleteManagementTools.ViewModel
         public MainViewModel()
         {
             _squadList = new ObservableCollection<Rower>();
-            RetrieveSquadUpdate();
+            RetrieveSquadUpdate("All");
         }
 
-        public void RetrieveSquadUpdate()
+        public void RetrieveSquadUpdate(string squad)
         {
-            SquadList = AccessDatabaseComms.ReadDatabase();
+            SquadList = AccessDatabaseComms.SelectSquad(squad);
+        }
+
+        public void RemoveRower(object rower)
+        {
+            var removedRower = (Rower) rower;
+            AccessDatabaseComms.RemoveRowerFromDatabase(removedRower.FirstName, removedRower.LastName);
         }
         
         public event PropertyChangedEventHandler PropertyChanged;

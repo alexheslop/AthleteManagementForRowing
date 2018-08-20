@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AthleteManagementTools.Model
+﻿namespace AthleteManagementTools.Model
 {
     public static class ErgTestScorePredictor
     {

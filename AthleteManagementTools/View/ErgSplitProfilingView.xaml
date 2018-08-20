@@ -8,7 +8,7 @@
         xmlns:viewModel ="clr-namespace:AthleteManagementTools.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModel:ErgSplitProfilingViewModel }"
-        Title="Split Calculator" Height="450" Width="800" MouseDown="Window_MouseDown">
+        Title="Split Calculator" Height="450" Width="800" MouseDown="Window_MouseDown" WindowStartupLocation="CenterOwner">
     <Grid Name="GeneralGrid" Focusable="True">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -21,32 +21,30 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Grid.Row="0" BorderThickness="2" BorderBrush="CornflowerBlue" Grid.ColumnSpan="3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Individual Details" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Maximum Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Resting Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="2mmol/UT2 split" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Name="MaxHrBox"  Grid.Column="1" Grid.Row="1" Margin="7,3"/>
-                <TextBox Name="MinHrBox" Grid.Column="1" Grid.Row="2" Margin="7,3"/>
-                <TextBox Name="SplitBox" Grid.Column="1" Grid.Row="3" Margin="7,3"/>
-                <Button Name="GenerateResultsBtn" Grid.Column="2" Grid.Row="3" Content="Generate Results" Margin="50,2"  Click="GenerateResultsBtn_OnClick"/>
-            </Grid>
-            
-            
-        </Border>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Individual Details" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Maximum Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Resting Heart Rate" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="2mmol/UT2 split" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBox Name="MaxHrBox"  Grid.Column="1" Grid.Row="1" Margin="7,3" Text="{Binding NewRower.MaxHr}"/>
+            <TextBox Name="MinHrBox" Grid.Column="1" Grid.Row="2" Margin="7,3" Text="{Binding NewRower.MinHr}"/>
+            <TextBox Name="SplitBox" Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding NewRower.Ut2Split}"/>
+            <Button Name="GenerateResultsBtn" Grid.Column="2" Grid.Row="3" Content="Generate Results" Margin="50,2"  Click="GenerateResultsBtn_OnClick"/>
+        </Grid>
+
+
         <ListView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="10" ItemsSource="{Binding TrainingZones}" HorizontalContentAlignment="Center">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
@@ -73,6 +71,27 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Test Personal Bests" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="2000m" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="5000m" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="30 @ 20 Split" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Name="Pb2kBox"  Margin="7,3" VerticalAlignment="Center" Text="{Binding Pb2K, Mode=TwoWay}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Name="Pb5kBox" Margin="7,3"  VerticalAlignment="Center" Text="{Binding Pb5K, Mode=TwoWay}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Name="Pb30r20Box" Margin="7,3" VerticalAlignment="Center" Text="{Binding Pb30R20, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="3" Focusable="True">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
                 
             </Grid.ColumnDefinitions>
 
@@ -90,10 +109,10 @@
                 <Run Text="/"/>
                 <Run Text="{Binding Predicted5K}"/>
             </TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding Predicted30R20}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" Text="{Binding Predicted30R20}" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="3" Focusable="True">
+        <Grid Grid.Column="2" Grid.Row="3" Focusable="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -108,12 +127,14 @@
 
             <TextBlock Grid.Column="0" Grid.Row="0" Text="Test Calculator" VerticalAlignment="Center" FontWeight="DemiBold" Margin="4" FontSize="15"/>
             <TextBlock Grid.Column="1" Grid.Row="0" Text="Enter test score to find UT2" FontSize="9" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <ComboBox Grid.Column="0" Grid.Row="1" Name="ComboBox" Text="{Binding SplitType, Mode=OneWayToSource}">
+            <TextBlock Text="Test Distance" Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom" FontWeight="DemiBold" Margin="4" FontSize="10"/>
+            <TextBlock Text="(m:ss.0 format)" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="4" FontSize="10"/>
+            <ComboBox Grid.Column="0" Grid.Row="2" Name="ComboBox" Text="{Binding SplitType, Mode=OneWayToSource}">
                 <ComboBoxItem Content="2000m" HorizontalContentAlignment="Right"/>
                 <ComboBoxItem Content="5000m" HorizontalContentAlignment="Right"/>
                 <ComboBoxItem Content="30 @ 20 (/500m)" HorizontalContentAlignment="Right"/>
             </ComboBox>
-            <TextBox Name="ThirtyAtTwentyBox" Grid.Column="1" Grid.Row="1" Margin="7,3">
+            <TextBox Name="ThirtyAtTwentyBox" Grid.Column="1" Grid.Row="2" Margin="7,3">
                 <TextBox.Text>
                     <Binding Path="TargetSplit" Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -122,8 +143,8 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Right" Text="UT2 Split:"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding TargetUt2}"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Right" Text="UT2 Split:"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Margin="7,3" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding TargetUt2}"/>
         </Grid>
     </Grid>
 </Window>

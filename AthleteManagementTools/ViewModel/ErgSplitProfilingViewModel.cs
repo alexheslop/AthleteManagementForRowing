@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AthleteManagementTools.Annotations;
@@ -8,7 +9,9 @@ namespace AthleteManagementTools.ViewModel
 {
     public class ErgSplitProfilingViewModel :INotifyPropertyChanged
     {
-        public string Ut2Split { get; set; }
+        private string _rowerFirstName;
+        private string _rowerLastName;
+        public Rower NewRower { get; set; }
         private string _predicted5K;
         public string Predicted5K {
             get => _predicted5K;
@@ -119,8 +122,37 @@ namespace AthleteManagementTools.ViewModel
             }
         }
 
+        private string _pb2K;
+        private string _pb5K;
+        private string _pb30R20;
 
-
+        public string Pb2K
+        {
+            get => _pb2K;
+            set
+            {
+                _pb2K = value;
+                OnPropertyChanged(nameof(Pb2K));
+            }
+        }
+        public string Pb5K
+        {
+            get => _pb5K;
+            set
+            {
+                _pb5K = value;
+                OnPropertyChanged(nameof(Pb5K));
+            }
+        }
+        public string Pb30R20
+        {
+            get => _pb30R20;
+            set
+            {
+                _pb30R20 = value;
+                OnPropertyChanged(nameof(Pb30R20));
+            }
+        }
 
 
         public ErgSplitProfilingViewModel()
@@ -135,7 +167,25 @@ namespace AthleteManagementTools.ViewModel
             Predicted5KTime = splitCalc.Get5KTime();
         }
 
-        public ErgSplitProfilingViewModel(double hrmax, double hrmin, string split)
+        public ErgSplitProfilingViewModel(object chosenRower)
+        {
+            NewRower = (Rower) chosenRower;
+            TrainingZones = new ObservableCollection<TrainingZone>();
+            var splitCalc = new SplitCalculator(200, 55, NewRower.Ut2Split, true);
+            TrainingZones = splitCalc.TrainingZoneList;
+            Predicted2K = splitCalc.Get2K();
+            Predicted5K = splitCalc.Get5K();
+            Predicted30R20 = splitCalc.Get30R20();
+            Predicted2KTime = splitCalc.Get2KTime();
+            Predicted5KTime = splitCalc.Get5KTime();
+            Pb2K = NewRower.Pb2K;
+            Pb5K = NewRower.Pb5K;
+            Pb30R20 = NewRower.Pb30R20;
+            _rowerFirstName = NewRower.FirstName;
+            _rowerLastName = NewRower.LastName;
+        }
+
+        public ErgSplitProfilingViewModel(double hrmax, double hrmin, string split, string pb2K, string pb5K, string pb30R20)
         {
             TrainingZones = new ObservableCollection<TrainingZone>();
             var splitCalc = new SplitCalculator(hrmax, hrmin, split, true);
@@ -145,6 +195,10 @@ namespace AthleteManagementTools.ViewModel
             Predicted30R20 = splitCalc.Get30R20();
             Predicted2KTime = splitCalc.Get2KTime();
             Predicted5KTime = splitCalc.Get5KTime();
+            NewRower = new Rower {FirstName = _rowerFirstName, LastName = _rowerLastName, Ut2Split = split, Pb2K = pb2K, Pb30R20 = pb30R20, Pb5K = pb5K, MaxHr = (int)Math.Round(hrmax), MinHr = (int)Math.Round(hrmin) };
+            Pb2K = NewRower.Pb2K;
+            Pb5K = NewRower.Pb5K;
+            Pb30R20 = NewRower.Pb30R20;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -153,6 +207,12 @@ namespace AthleteManagementTools.ViewModel
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void UpdateRowerDetails(string firstName, string lastName, string splitBoxText, string pb2K, string pb5K, string pb30R20, int maxHR, int minHR)
+        {
+            AccessDatabaseComms.UpdateRowerFromErgProfile(firstName, lastName, pb2K,
+                pb5K, pb30R20, splitBoxText, maxHR, minHR);
         }
     }
 }

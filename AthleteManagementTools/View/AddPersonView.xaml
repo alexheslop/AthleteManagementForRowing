@@ -23,12 +23,13 @@
                     <RowDefinition Height="15*"/>
                     <RowDefinition Height="15*"/>
                     <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" Grid.Row="0" Margin="5">
                     <TextBlock Text="New Rower" FontSize="13" FontWeight="DemiBold"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                    <TextBlock Text="Squad" FontSize="13"/>
+                    <TextBlock Text="Squad" FontSize="11"/>
                     <ComboBox Text="{Binding Squad}">
                         <ComboBoxItem Content="None" IsSelected="True"/>
                         <ComboBoxItem Content="Senior Men"/>
@@ -38,36 +39,44 @@
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
-                    <TextBlock Text="First Name" FontSize="12"/>
+                    <TextBlock Text="First Name" FontSize="11"/>
                     <TextBox Text="{Binding FirstName, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
-                    <TextBlock Text="Last Name" FontSize="12"/>
+                    <TextBlock Text="Last Name" FontSize="11"/>
                     <TextBox Text="{Binding LastName, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="2" Margin="5">
-                    <TextBlock Text="Side" FontSize="12"/>
+                    <TextBlock Text="Side" FontSize="11"/>
                     <TextBox Text="{Binding Side, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="2" Margin="5">
-                    <TextBlock Text="Sculler?" FontSize="12"/>
+                    <TextBlock Text="Sculler?" FontSize="11"/>
                     <CheckBox IsChecked="{Binding CanScull, Mode=TwoWay}" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="3" Margin="5">
-                    <TextBlock Text="Strokeside Rank" FontSize="12"/>
+                    <TextBlock Text="Strokeside Rank" FontSize="11"/>
                     <TextBox Text="{Binding StrokesideRank, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="3" Margin="5">
-                    <TextBlock Text="Bowside Rank" FontSize="12"/>
+                    <TextBlock Text="Bowside Rank" FontSize="11"/>
                     <TextBox Text="{Binding BowsideRank, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="4" Margin="5">
-                    <TextBlock Text="Scull Rank" FontSize="12"/>
+                    <TextBlock Text="Scull Rank" FontSize="11"/>
                     <TextBox Text="{Binding ScullRank, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="4" Margin="5">
-                    <TextBlock Text="2k Ergo Time (mm:ss.0)" FontSize="12"/>
-                    <TextBox Text="{Binding ErgTime, Mode=TwoWay}"/>
+                    <TextBlock Text="2k PB Time (m:ss.0)" FontSize="11"/>
+                    <TextBox Text="{Binding Pb2K, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="5" Margin="5">
+                    <TextBlock Text="30r20 PB Split (m:ss.0)" FontSize="10"/>
+                    <TextBox Text="{Binding Pb30R20, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="5" Margin="5">
+                    <TextBlock Text="5k PB Time (m:ss.0)" FontSize="11"/>
+                    <TextBox Text="{Binding Pb5K, Mode=TwoWay}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -125,7 +134,7 @@
             </Button>
         </DockPanel>
         
-        <ContentControl Name="ContentPanel" Grid.Column="1"/>
+        <ContentControl Name="ContentPanel" Grid.Column="1" ContentTemplate="{StaticResource RowerPane}"/>
         
         <Button Grid.Column="2" Height="35" Margin="10" Name="FinishBtn" Click="FinishBtn_OnClickBtn_OnClick" VerticalAlignment="Bottom">
             <TextBlock Text="Finish"/>
