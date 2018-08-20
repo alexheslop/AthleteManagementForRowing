@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
+        xmlns:interfaces ="clr-namespace:AthleteManagementTools.Interfaces"
         xmlns:local="clr-namespace:AthleteManagementTools.View"
         mc:Ignorable="d"
         Title="CrewSelectionView" Height="450" Width="800">
@@ -20,7 +21,7 @@
                 <TextBlock Text="Add Boat.."/>
             </Button>
         </DockPanel>
-        <ComboBox Grid.Row="1" ItemsSource="{Binding BoatList}">
+        <!--<ComboBox Grid.Row="1" ItemsSource="{Binding BoatList}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -29,6 +30,48 @@
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-        </ComboBox>
+        </ComboBox>-->
+        <Grid Grid.Row="1">
+            <ItemsControl>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <ComboBox ItemsSource="{Binding Path=BoatList}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding BoatName}"/>
+                                            <TextBlock Text="{Binding Seats}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <StackPanel>
+                                <ItemsControl ItemsSource="{Binding CrewList}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ComboBox>
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Side}"/>
+                                                            <TextBlock Text=": "/>
+                                                            <TextBlock Text="{Binding FirstName}"/>
+                                                            <TextBlock Text="{Binding LastName}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+            </ItemsControl>
+
+        </Grid>
     </Grid>
 </Window>

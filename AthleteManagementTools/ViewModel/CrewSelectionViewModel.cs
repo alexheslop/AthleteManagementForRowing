@@ -9,7 +9,7 @@ namespace AthleteManagementTools.ViewModel
     public class CrewSelectionViewModel :INotifyPropertyChanged
     {
         private ObservableCollection<Boat> _boatList;
-
+        private ObservableCollection<Rower> _crewList;
         public CrewSelectionViewModel()
         {
             _boatList = new ObservableCollection<Boat>();
@@ -23,6 +23,16 @@ namespace AthleteManagementTools.ViewModel
             {
                 _boatList = value;
                 OnPropertyChanged(nameof(BoatList));
+            }
+
+        }
+        public ObservableCollection<Rower> CrewList
+        {
+            get => _crewList;
+            set
+            {
+                _crewList = value;
+                OnPropertyChanged(nameof(CrewList));
             }
 
         }
