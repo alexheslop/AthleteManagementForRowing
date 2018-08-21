@@ -11,6 +11,11 @@ namespace AthleteManagementTools.View
             var mainViewModel = new MainViewModel();
             DataContext = mainViewModel;
             InitializeComponent();
+            SideSelect.Text = "All";
+            SquadSelect.Text = "All";
+            SortBy.Text = "Squad";
+            ScullRankCBI.Visibility = Visibility.Hidden;
+            SweepRankCBI.Visibility = Visibility.Hidden;
         }
 
         private void TrainingProgramBtn_OnClick(object sender, RoutedEventArgs e)
@@ -39,7 +44,7 @@ namespace AthleteManagementTools.View
             newAddPersonView.ShowDialog();
             if (newAddPersonView.DialogResult.HasValue && newAddPersonView.DialogResult.Value)
             {
-               ((MainViewModel) DataContext).RetrieveSquadUpdate(SquadSelect.Text);
+                RefreshTable(SquadSelect.Text, SideSelect.Text, SortBy.Text);
             }
         }
 
@@ -56,7 +61,8 @@ namespace AthleteManagementTools.View
         private void SquadSelect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var squadString = ((ComboBoxItem) e.AddedItems[0]).Content.ToString();
-            ((MainViewModel)DataContext).RetrieveSquadUpdate(squadString);
+
+            RefreshTable(squadString, SideSelect.Text, SortBy.Text);
         }
         
         private void EditPersonBtn_OnClick(object sender, RoutedEventArgs e)
@@ -69,7 +75,7 @@ namespace AthleteManagementTools.View
             newEditRowerView.ShowDialog();
             if (newEditRowerView.DialogResult.HasValue && newEditRowerView.DialogResult.Value)
             {
-                ((MainViewModel)DataContext).RetrieveSquadUpdate(SquadSelect.Text);
+                RefreshTable(SquadSelect.Text, SideSelect.Text, SortBy.Text);
             }
         }
 
@@ -83,13 +89,42 @@ namespace AthleteManagementTools.View
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 ((MainViewModel) DataContext).RemoveRower(source);
-                RefreshTable();
+                RefreshTable(SquadSelect.Text, SideSelect.Text, SortBy.Text);
             }
         }
 
-        private void RefreshTable()
+        private void RefreshTable(string squad, string side, string sort)
         {
-            ((MainViewModel)DataContext).RetrieveSquadUpdate(SquadSelect.Text);
+            ((MainViewModel)DataContext).RetrieveAthletes(squad, side, sort);
+        }
+
+        private void SortBy_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var sortString = ((ComboBoxItem)e.AddedItems[0]).Content.ToString();
+            RefreshTable(SquadSelect.Text, SideSelect.Text, sortString);
+        }
+
+        private void SideSelect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var sideString = ((ComboBoxItem)e.AddedItems[0]).Content.ToString();
+            
+            switch (sideString)
+            {
+                case "Bowside":
+                case "Strokeside":
+                    SweepRankCBI.Visibility = Visibility.Visible;
+                    ScullRankCBI.Visibility = Visibility.Hidden;
+                    break;
+                case "Scullers":
+                    ScullRankCBI.Visibility = Visibility.Visible;
+                    SweepRankCBI.Visibility = Visibility.Hidden;
+                    break;
+                default:
+                    SweepRankCBI.Visibility = Visibility.Hidden;
+                    ScullRankCBI.Visibility = Visibility.Hidden;
+                    break;
+            }
+            RefreshTable(SquadSelect.Text, sideString, SortBy.Text);
         }
     }
 }

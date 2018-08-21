@@ -48,8 +48,13 @@
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="2" Margin="5">
                     <TextBlock Text="Side" FontSize="11"/>
-                    <TextBox Text="{Binding Side, Mode=TwoWay}"/>
+                    <ComboBox Text="{Binding Side, Mode=TwoWay}">
+                        <ComboBoxItem Content="Strokeside" IsSelected="True"/>
+                        <ComboBoxItem Content="Bowside"/>
+                        <ComboBoxItem Content="Both"/>
+                    </ComboBox>
                 </StackPanel>
+                
                 <StackPanel Grid.Column="1" Grid.Row="2" Margin="5">
                     <TextBlock Text="Sculler?" FontSize="11"/>
                     <CheckBox IsChecked="{Binding CanScull, Mode=TwoWay}" HorizontalAlignment="Center"/>

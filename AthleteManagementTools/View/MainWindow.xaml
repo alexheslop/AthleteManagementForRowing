@@ -75,22 +75,45 @@
                     <ColumnDefinition Width="75*"/>
                     <ColumnDefinition Width="25*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Squads" FontSize="16" FontWeight="DemiBold"/>
-                <Button Name="AddPersonBtn" Grid.Column="1" Style="{StaticResource SidebarButton}" Height="25" Width="100" Click="AddPersonBtn_OnClick">
-                    <TextBlock Text="Add Personnel..."/>
-                </Button>
+                <TextBlock Grid.Column="0" Text="Club Roster" FontSize="16" FontWeight="DemiBold"/>
             </Grid>
-            <ComboBox Name="SquadSelect"  Margin="15,25,15,0" HorizontalAlignment="Center" MinWidth="250" SelectionChanged="SquadSelect_OnSelectionChanged">
-                <ComboBoxItem Content="All" IsSelected="True"/>
-                <Separator/>
-                <ComboBoxItem Content="Seniors"/>
-                <ComboBoxItem Content="Novices"/>
-                <Separator/>
-                <ComboBoxItem Content="Senior Men"/>
-                <ComboBoxItem Content="Senior Women"/>
-                <ComboBoxItem Content="Novice Men"/>
-                <ComboBoxItem Content="Novice Women"/>
-            </ComboBox>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Squad:" VerticalAlignment="Center" FontSize="14"/>
+                <ComboBox Name="SquadSelect" Margin="5,10,5,10"  HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="125" SelectionChanged="SquadSelect_OnSelectionChanged">
+                    <ComboBoxItem Content="All"/>
+                    <Separator/>
+                    <ComboBoxItem Content="Seniors"/>
+                    <ComboBoxItem Content="Novices"/>
+                    <Separator/>
+                    <ComboBoxItem Content="Senior Men"/>
+                    <ComboBoxItem Content="Senior Women"/>
+                    <ComboBoxItem Content="Novice Men"/>
+                    <ComboBoxItem Content="Novice Women"/>
+                    <Separator/>
+                    <ComboBoxItem Content="Injured"/>
+                </ComboBox>
+                <TextBlock Text="Side:" VerticalAlignment="Center" FontSize="14" Margin="100,10,0,10"/>
+                <ComboBox Name="SideSelect" Margin="5,10,5,10"  HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="125" SelectionChanged="SideSelect_OnSelectionChanged">
+                    <ComboBoxItem Content="All"/>
+                    <Separator/>
+                    <ComboBoxItem Content="Strokeside"/>
+                    <ComboBoxItem Content="Bowside"/>
+                    <ComboBoxItem Content="Scullers"/>
+                </ComboBox>
+                <TextBlock  Text="Sort by:" VerticalAlignment="Center" FontSize="14" Margin="100,10,0,10"/>
+                <ComboBox Name="SortBy" Margin="5,10,5,10"  HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="125" SelectionChanged="SortBy_OnSelectionChanged">
+                    <ComboBoxItem Content="Squad"/>
+                    <ComboBoxItem Content="First Name"/>
+                    <ComboBoxItem Content="Last Name"/>
+                    <ComboBoxItem Content="Injured"/>
+                    <ComboBoxItem Name="SweepRankCBI" Content="Sweep Rank"/>
+                    <ComboBoxItem Name="ScullRankCBI" Content="Scull Rank"/>
+                    
+                </ComboBox>
+            </StackPanel>
+            <Button Name="AddPersonBtn" Grid.Column="1" Style="{StaticResource SidebarButton}" Height="25" Width="100" Click="AddPersonBtn_OnClick" HorizontalAlignment="Right" Margin="50,0">
+                <TextBlock Text="Add Personnel..."/>
+            </Button>
             <ListView Margin="20,25,20,0" ItemsSource="{Binding SquadList}" Name="SquadListBox">
                 <ListView.Resources>
                     <Style TargetType="{x:Type GridViewColumnHeader}">
@@ -112,9 +135,10 @@
                         <GridViewColumn Header="Last Name" Width="80" DisplayMemberBinding="{Binding LastName}" />
                         <GridViewColumn Header="Side" Width="70" DisplayMemberBinding="{Binding Side}" />
                         <GridViewColumn Header="Sculler?" Width="45" DisplayMemberBinding="{Binding CanScull}" />
-                        <GridViewColumn Header="Strokeside Rank" Width="100" DisplayMemberBinding="{Binding StrokesideRank}" />
+                        <!--<GridViewColumn Header="Strokeside Rank" Width="100" DisplayMemberBinding="{Binding StrokesideRank}" />
                         <GridViewColumn Header="Bowside Rank" Width="90" DisplayMemberBinding="{Binding BowsideRank}" />
-                        <GridViewColumn Header="Scull Rank" Width="75" DisplayMemberBinding="{Binding ScullRank}" />
+                        <GridViewColumn Header="Scull Rank" Width="75" DisplayMemberBinding="{Binding ScullRank}" />-->
+                        <GridViewColumn Header="Injured" Width="45" DisplayMemberBinding="{Binding Injured}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

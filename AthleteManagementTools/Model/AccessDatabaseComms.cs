@@ -11,28 +11,93 @@ namespace AthleteManagementTools.Model
     {
         private static ObservableCollection<Rower> _rowerList;
 
-        public static ObservableCollection<Rower> SelectSquad(string squad)
+        public static ObservableCollection<Rower> SelectSquad(string squad, string side, string sort)
         {
-            var newstring = "";
-            if (squad == "All")
-            {
-                newstring = "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes";
-            }
-            else if (squad == "Seniors" || squad == "Novices")
-            {
-                squad = squad.Remove(squad.Length - 1);
-                newstring =
-                    $"SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes WHERE Squad LIKE '{squad}%'";
-            }
+            const string datastring = "SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR,Injured FROM Athletes";
+
+            var sqlQueryString = datastring + GenerateSquadString(squad) + GenerateSideString(side) +
+                                 GenerateOrderString(sort, side);
+
             
-            else
-            {
-                newstring = $"SELECT FirstName,LastName,Squad,Side,CanScull,BowsideRank,StrokesideRank,ScullRank,PB2k,PB5k,PB30r20,UT2Split,MaxHR,MinHR FROM Athletes WHERE Squad = '{squad}'";
-            }
-            
-            var athleteList = ReadAthleteDatabase(newstring);
+            var athleteList = ReadAthleteDatabase(sqlQueryString);
             return athleteList;
         }
+
+        private static string GenerateOrderString(string sort, string side)
+        {
+            var output = "";
+            switch (sort)
+            {
+                case "First Name":
+                    output = " ORDER BY FirstName ASC, LastName ASC";
+                    break;
+                case "Last Name":
+                    output = " ORDER BY LastName ASC, FirstName ASC";
+                    break;
+                case "Injured":
+                    output = " ORDER BY Injured DESC, Squad DESC, LastName ASC";
+                    break;
+                case "Scull Rank":
+                    output = " ORDER BY Squad DESC, ScullRank ASC";
+                    break;
+                case "Sweep Rank":
+                    output = $" ORDER BY Squad DESC, Side DESC, {side}Rank ASC";
+                    break;
+                default:
+                    output = " ORDER BY Squad DESC, LastName ASC";
+                    break;
+
+            }
+
+            return output;
+        }
+
+        private static string GenerateSideString(string side)
+        {
+            var output = "";
+            switch (side)
+            {
+                case "Bowside":
+                case "Strokeside":
+                    output = $" AND (Side = '{side}' OR Side = 'Both')";
+                    break;
+                case "Scullers":
+                    output = " AND (CanScull = true)";
+                    break;
+                default:
+                    output = "";
+                    break;
+
+            }
+
+            return output;
+        }
+
+        private static string GenerateSquadString(string squad)
+        {
+            var output = "";
+            switch (squad)
+            {
+                case "All":
+                    output = " WHERE (Squad LIKE 'Senior%' OR 'Novice%')";
+                    break;
+                case "Seniors":
+                case "Novices":
+                    squad = squad.Remove(squad.Length - 1);
+                    output = $" WHERE (Squad LIKE '{squad}%')";
+                    break;
+                case "Injured":
+                    output = " WHERE (Injured = true)";
+                    break;
+                default:
+                    output = $" WHERE (Squad = '{squad}')";
+                    break;
+
+            }
+
+            return output;
+        }
+
         private static ObservableCollection<Rower> ReadAthleteDatabase(string sqlQuery)
         {
             _rowerList = new ObservableCollection<Rower>();
@@ -64,6 +129,7 @@ namespace AthleteManagementTools.Model
                 newRower.Ut2Split = reader.GetString(11);
                 newRower.MaxHr = reader.GetInt16(12);
                 newRower.MinHr = reader.GetInt16(13);
+                newRower.Injured = reader.GetBoolean(14);
                 _rowerList.Add(newRower);
             }
 
@@ -162,7 +228,7 @@ namespace AthleteManagementTools.Model
                 CommandText =
                     "INSERT INTO [Boats](BoatName,Seats,Cox,Scull,classRank)VALUES(@bnm, @seat, @cox, @scull, @clRank)"
             };
-            //command.Parameters.AddWithValue("@bnm", boatName);
+            command.Parameters.AddWithValue("@bnm", boatName);
             command.Parameters.AddWithValue("@seat", seats);
             command.Parameters.AddWithValue("@cox", cox);
             command.Parameters.AddWithValue("@scull", scull);
@@ -223,14 +289,13 @@ namespace AthleteManagementTools.Model
                 p8.Value = lastName;
                 command.Parameters.Add(p8);
 
-                /*var result = $"Records affected: {command.ExecuteNonQuery()}";
-                MessageBox.Show(result);*/
+                command.ExecuteNonQuery();
             }
             return false;
         }
 
         public static bool UpdateRowerFromDetails(string firstName, string lastName, string squad, string side,
-            bool canScull, int bowsideRank, int strokesideRank, int scullRank)
+            bool canScull, int bowsideRank, int strokesideRank, int scullRank, bool injured)
         {
             var connectionString = ConfigurationManager
                 .ConnectionStrings["AthleteManagementTools.Properties.Settings.RowingDatabaseConnectionString"]
@@ -242,7 +307,7 @@ namespace AthleteManagementTools.Model
 
                 var command = connection.CreateCommand();
                 command.CommandText =
-                    "UPDATE Athletes SET Squad = ?, Side = ?, CanScull = ?, BowsideRank = ?, StrokesideRank = ?, ScullRank = ? WHERE FirstName = ? and LastName = ?";
+                    "UPDATE Athletes SET Squad = ?, Side = ?, CanScull = ?, BowsideRank = ?, StrokesideRank = ?, ScullRank = ?, Injured = ? WHERE FirstName = ? and LastName = ?";
 
                 var p1 = command.CreateParameter();
                 p1.Value = squad;
@@ -269,13 +334,18 @@ namespace AthleteManagementTools.Model
                 command.Parameters.Add(p6);
 
                 var p7 = command.CreateParameter();
-                p7.Value = firstName;
+                p7.Value = injured;
                 command.Parameters.Add(p7);
 
                 var p8 = command.CreateParameter();
-                p8.Value = lastName;
+                p8.Value = firstName;
                 command.Parameters.Add(p8);
 
+                var p9 = command.CreateParameter();
+                p9.Value = lastName;
+                command.Parameters.Add(p9);
+
+                command.ExecuteNonQuery();
                 /*var result = $"Records affected: {command.ExecuteNonQuery()}";
                 MessageBox.Show(result);*/
             }
@@ -304,6 +374,7 @@ namespace AthleteManagementTools.Model
                 p2.Value = lastName;
                 command.Parameters.Add(p2);
 
+                command.ExecuteNonQuery();
                 /*var result = $"Records affected: {command.ExecuteNonQuery()}";
                 MessageBox.Show(result);*/
             }

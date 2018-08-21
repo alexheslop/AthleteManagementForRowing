@@ -9,7 +9,6 @@ namespace AthleteManagementTools.Model
         public string Squad { get; set; }
         public string Side { get; set; }
         public bool CanScull { get; set; }
-        public double ErgTime { get; set; }
         public int StrokesideRank { get; set; }
         public int BowsideRank { get; set; }
         public int ScullRank { get; set; }
@@ -19,6 +18,7 @@ namespace AthleteManagementTools.Model
         public string Ut2Split { get; set; }
         public int MaxHr { get; set; }
         public int MinHr { get; set; }
+        public bool Injured { get; set; }
 
         public Rower()
         {
@@ -27,7 +27,6 @@ namespace AthleteManagementTools.Model
             Squad = "Senior Women";
             Side = "Strokeside";
             CanScull = true;
-            ErgTime = 400;
             StrokesideRank = 0;
             BowsideRank = 0;
             ScullRank = 0;
@@ -37,6 +36,7 @@ namespace AthleteManagementTools.Model
             Ut2Split = "2:00.0";
             MaxHr = 200;
             MinHr = 60;
+            Injured = false;
         }
     }
 }

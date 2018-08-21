@@ -4,7 +4,6 @@
     {
         string Side { get; set; }
         bool CanScull { get; set; }
-        double ErgTime { get; set; }
         int StrokesideRank { get; set; }
         int BowsideRank { get; set; }
         int ScullRank { get; set; }
@@ -14,5 +13,6 @@
         string Ut2Split { get; set; }
         int MaxHr { get; set; }
         int MinHr { get; set; }
+        bool Injured { get; set; }
     }
 }

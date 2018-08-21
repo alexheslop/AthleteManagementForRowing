@@ -42,10 +42,14 @@
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="3">
             <TextBlock Text="Side" FontSize="11"/>
-            <TextBox Text="{Binding Side, Mode=TwoWay}"/>
+            <ComboBox Text="{Binding Side, Mode=TwoWay}">
+                <ComboBoxItem Content="Strokeside" IsSelected="True"/>
+                <ComboBoxItem Content="Bowside"/>
+                <ComboBoxItem Content="Both"/>
+            </ComboBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" Margin="3">
-            <TextBlock Text="Sculler?" FontSize="11"/>
+            <TextBlock Text="Sculler" FontSize="11"/>
             <CheckBox IsChecked="{Binding CanScull, Mode=TwoWay}" HorizontalAlignment="Center"/>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="3" Margin="3">
@@ -60,8 +64,11 @@
             <TextBlock Text="Scull Rank" FontSize="11"/>
             <TextBox Text="{Binding ScullRank, Mode=TwoWay}"/>
         </StackPanel>
-        
-        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="1" Grid.Row="4" Margin="3">
+            <TextBlock Text="Injured" FontSize="11"/>
+            <CheckBox IsChecked="{Binding Injured, Mode=TwoWay}" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="OkBtn" Width="60" Height="25" Margin="0,3,5,0" Click="OkBtn_OnClick">
                 <TextBlock Text="OK"/>
             </Button>
