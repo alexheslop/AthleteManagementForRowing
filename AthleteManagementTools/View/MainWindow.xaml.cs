@@ -20,7 +20,12 @@ namespace AthleteManagementTools.View
 
         private void TrainingProgramBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            var newTrainingProgramView = new TrainingProgramView() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            newTrainingProgramView.ShowDialog();
+            if (newTrainingProgramView.DialogResult.HasValue && newTrainingProgramView.DialogResult.Value)
+            {
+                
+            }
         }
 
         private void CrewSelectionBtn_OnClick(object sender, RoutedEventArgs e)
