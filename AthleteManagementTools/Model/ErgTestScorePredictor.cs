@@ -16,7 +16,7 @@
 
         public static double ExpectedUt2(double watts2K)
         {
-            var score = watts2K * 0.55;
+            var score = watts2K * 0.55867;
             return score;
         }
 
