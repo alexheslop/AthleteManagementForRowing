@@ -20,5 +20,15 @@ namespace AthleteManagementTools.View
                 ((CrewSelectionViewModel)DataContext).UpdateBoatList();
             }
         }
+
+        private void AddCrewBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            var addNewCrew = new AddCrewView();
+            addNewCrew.ShowDialog();
+            if (addNewCrew.DialogResult.HasValue && addNewCrew.DialogResult.Value)
+            {
+                ((CrewSelectionViewModel)DataContext).AddCrewPanel(addNewCrew.NewCrew);
+            }
+        }
     }
 }

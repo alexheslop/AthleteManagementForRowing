@@ -11,14 +11,27 @@
     <Window.DataContext>
         <viewModel:CrewSelectionViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="CrewPanel" DataType="{x:Type interfaces:ICrew}">
+            <StackPanel>
+                <TextBlock Text="Boat"/>
+                <TextBlock Text="{Binding BoatUsed}"/>
+                
+                
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
         <DockPanel LastChildFill="False">
+            <Button DockPanel.Dock="Right" Margin="25" Click="AddCrewBtn_OnClick">
+                <TextBlock Text="Add Crew.."/>
+            </Button>
             <Button DockPanel.Dock="Right" Margin="25" Click="AddBoatBtn_OnClick">
-                <TextBlock Text="Add Boat.."/>
+                <TextBlock Text="Add Shell.."/>
             </Button>
         </DockPanel>
         <!--<ComboBox Grid.Row="1" ItemsSource="{Binding BoatList}">

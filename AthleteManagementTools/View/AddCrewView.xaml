@@ -1,0 +1,63 @@
+﻿<Window x:Class="AthleteManagementTools.View.AddCrewView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:interfaces="clr-namespace:AthleteManagementTools.Interfaces"
+        xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
+        mc:Ignorable="d"
+        Title="Add Crew - Athlete Management" Height="300" Width="500">
+    <Window.DataContext>
+        <viewModel:AddCrewViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="BoatPane" DataType="{x:Type interfaces:ICrew}">
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Grid.Row="0" Margin="5">
+                    <TextBlock Text="New Crew" FontSize="13" FontWeight="DemiBold"/>
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
+                    <TextBlock Text="Crew 'Name'" FontSize="12"/>
+                    <TextBox Text="{Binding CrewName, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+                    <TextBlock Text="Boat" FontSize="12"/>
+                    <ComboBox Text="{Binding BoatUsed, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="2" Margin="5">
+                    <TextBlock Text="Scull?" FontSize="12"/>
+                    <CheckBox IsChecked="{Binding Scull, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="16*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="1" LastChildFill="False">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <Button  Height="35" Margin="10" MinWidth="100" Name="AddBoatBtn">
+                    <TextBlock Text="Add Crew"/>
+                </Button>
+                <Button Height="35" Margin="10" Name="FinishBtn">
+                    <TextBlock Text="Finish"/>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <ContentControl Name="ContentPanel" ContentTemplate="{StaticResource BoatPane}" Grid.Column="0"/>
+    </Grid>
+
+</Window>

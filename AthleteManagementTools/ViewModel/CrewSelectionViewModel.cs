@@ -10,6 +10,7 @@ namespace AthleteManagementTools.ViewModel
     {
         private ObservableCollection<Boat> _boatList;
         private ObservableCollection<Rower> _crewList;
+        private ObservableCollection<Crew> _crews;
         public CrewSelectionViewModel()
         {
             _boatList = new ObservableCollection<Boat>();
@@ -36,6 +37,16 @@ namespace AthleteManagementTools.ViewModel
             }
 
         }
+        public ObservableCollection<Crew> Crews
+        {
+            get => _crews;
+            set
+            {
+                _crews = value;
+                OnPropertyChanged(nameof(Crews));
+            }
+
+        }
 
         public void UpdateBoatList()
         {
@@ -47,6 +58,12 @@ namespace AthleteManagementTools.ViewModel
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void AddCrewPanel(object crew)
+        {
+            var newCrew = (Crew) crew;
+            
         }
     }
 }

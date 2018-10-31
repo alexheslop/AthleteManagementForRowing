@@ -62,6 +62,7 @@ namespace AthleteManagementTools.View
             var newAthleteZoneView = new AthleteZoneView(chosenRower) { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
             newAthleteZoneView.ShowDialog();
         }
+        
 
         private void SquadSelect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
