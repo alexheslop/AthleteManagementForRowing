@@ -48,6 +48,11 @@ namespace AthleteManagementTools.ViewModel
 
         }
 
+        public void UpdateCrewList()
+        {
+            //CrewList = AccessDatabaseComms.ReadDatabase();
+        }
+
         public void UpdateBoatList()
         {
             BoatList = AccessDatabaseComms.ReadBoatFromDatabase();

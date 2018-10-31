@@ -9,6 +9,7 @@ namespace AthleteManagementTools.View
         {
             InitializeComponent();
             DataContext = new CrewSelectionViewModel();
+            ((CrewSelectionViewModel) DataContext).UpdateCrewList();
         }
 
         private void AddBoatBtn_OnClick(object sender, RoutedEventArgs e)
