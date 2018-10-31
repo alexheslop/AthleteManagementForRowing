@@ -27,13 +27,13 @@ namespace AthleteManagementTools.ViewModel
 
         public void RetrieveAthletes(string squad, string side, string sort)
         {
-            SquadList = AccessDatabaseComms.SelectSquad(squad, side, sort);
+            SquadList = SqlServerDbComms.SelectSquad(squad, side, sort);
         }
 
         public void RemoveRower(object rower)
         {
             var removedRower = (Rower) rower;
-            AccessDatabaseComms.RemoveRowerFromDatabase(removedRower.FirstName, removedRower.LastName);
+            SqlServerDbComms.RemoveRowerFromDatabase(removedRower.FirstName, removedRower.LastName);
         }
         
         public event PropertyChangedEventHandler PropertyChanged;

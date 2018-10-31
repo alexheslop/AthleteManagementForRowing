@@ -50,12 +50,12 @@ namespace AthleteManagementTools.ViewModel
 
         public void UpdateCrewList()
         {
-            //CrewList = AccessDatabaseComms.ReadDatabase();
+            //CrewList = SqlServerDbComms.ReadDatabase();
         }
 
         public void UpdateBoatList()
         {
-            BoatList = AccessDatabaseComms.ReadBoatFromDatabase();
+            BoatList = SqlServerDbComms.ReadBoatFromDatabase();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

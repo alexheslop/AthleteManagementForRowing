@@ -1,15 +1,18 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
 {
     public partial class CrewSelectionView
     {
+        private ObservableCollection<MyPanel> panels = new ObservableCollection<MyPanel>();
         public CrewSelectionView()
         {
             InitializeComponent();
             DataContext = new CrewSelectionViewModel();
             ((CrewSelectionViewModel) DataContext).UpdateCrewList();
+            LstPanels.ItemsSource = panels;
         }
 
         private void AddBoatBtn_OnClick(object sender, RoutedEventArgs e)
@@ -21,8 +24,11 @@ namespace AthleteManagementTools.View
                 ((CrewSelectionViewModel)DataContext).UpdateBoatList();
             }
         }
-
-        private void AddCrewBtn_OnClick(object sender, RoutedEventArgs e)
+        private void AddPanel(string buttonId)
+        {
+            
+        }
+    private void AddCrewBtn_OnClick(object sender, RoutedEventArgs e)
         {
             var addNewCrew = new AddCrewView();
             addNewCrew.ShowDialog();
@@ -30,6 +36,12 @@ namespace AthleteManagementTools.View
             {
                 ((CrewSelectionViewModel)DataContext).AddCrewPanel(addNewCrew.NewCrew);
             }
+        }
+
+        private void MyButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            MyPanel p = new MyPanel();
+            panels.Add(p);
         }
     }
 }

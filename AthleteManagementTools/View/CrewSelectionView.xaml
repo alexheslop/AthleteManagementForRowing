@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="CrewSelectionView" Height="450" Width="800">
     <Window.DataContext>
-        <viewModel:CrewSelectionViewModel/>
+        <viewModel:MyPanel/>
     </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Key="CrewPanel" DataType="{x:Type interfaces:ICrew}">
@@ -45,7 +45,22 @@
             </ComboBox.ItemTemplate>
         </ComboBox>-->
         <Grid Grid.Row="1">
-            <ItemsControl>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="80*"/>
+            </Grid.RowDefinitions>
+            <Button Name="MyButton" Height="50" Width="50" Click="MyButton_OnClick"/>
+            <ItemsControl Name="LstPanels" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Id}"/>
+                                <TextBox Text="{Binding Text, Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<ItemsControl>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -82,9 +97,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-                
-            </ItemsControl>
-
+            </ItemsControl>-->
         </Grid>
     </Grid>
 </Window>

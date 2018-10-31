@@ -17,7 +17,7 @@ namespace AthleteManagementTools.ViewModel
 
         public bool AddPersonToDatabase()
         {
-            AccessDatabaseComms.WritePersonToDatabase(NewRower.FirstName, NewRower.LastName, NewRower.Squad, NewRower.Side,
+            SqlServerDbComms.WritePersonToDatabase(NewRower.FirstName, NewRower.LastName, NewRower.Squad, NewRower.Side,
                 NewRower.CanScull, NewRower.BowsideRank, NewRower.StrokesideRank, NewRower.ScullRank, NewRower.Pb2K, NewRower.Pb5K, NewRower.Pb30R20, "2:00.0");
             return true;
         }

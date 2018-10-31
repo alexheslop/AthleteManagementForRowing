@@ -96,6 +96,7 @@
     <Compile Include="Model\Rower.cs" />
     <Compile Include="Model\SplitCalculator.cs" />
     <Compile Include="Model\SplitToWattsConverter.cs" />
+    <Compile Include="Model\SQLServerDBComms.cs" />
     <Compile Include="Model\TrainingZone.cs" />
     <Compile Include="Model\WeightClass.cs" />
     <Compile Include="Model\WeightProfilingCommonMethods.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MyPanel.cs" />
     <Compile Include="ViewModel\SeatRacingViewModel.cs" />
     <Compile Include="Model\TimeToSplitConverter.cs" />
     <Compile Include="ViewModel\SelectAthleteViewModel.cs" />

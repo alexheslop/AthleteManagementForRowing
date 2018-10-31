@@ -11,53 +11,70 @@
         <viewModel:AddCrewViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <DataTemplate x:Key="BoatPane" DataType="{x:Type interfaces:ICrew}">
-            <Grid Margin="15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15*"/>
-                    <RowDefinition Height="15*"/>
-                    <RowDefinition Height="15*"/>
-                    <RowDefinition Height="15*"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Column="0" Grid.Row="0" Margin="5">
-                    <TextBlock Text="New Crew" FontSize="13" FontWeight="DemiBold"/>
-                </StackPanel>
-                <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
-                    <TextBlock Text="Crew 'Name'" FontSize="12"/>
-                    <TextBox Text="{Binding CrewName, Mode=TwoWay}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
-                    <TextBlock Text="Boat" FontSize="12"/>
-                    <ComboBox Text="{Binding BoatUsed, Mode=TwoWay}"/>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="2" Margin="5">
-                    <TextBlock Text="Scull?" FontSize="12"/>
-                    <CheckBox IsChecked="{Binding Scull, Mode=TwoWay}" HorizontalAlignment="Center"/>
-                </StackPanel>
-                
-            </Grid>
-        </DataTemplate>
+        
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25*"/>
             <ColumnDefinition Width="16*"/>
         </Grid.ColumnDefinitions>
+        <Grid Margin="15">   
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="5">
+                <TextBlock Text="New Crew" FontSize="13" FontWeight="DemiBold"/>
+            </StackPanel> 
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="5">
+                <TextBlock Text="Crew 'Name'" FontSize="12"/>
+                <TextBox Text="{Binding NewCrew.CrewName, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+                <TextBlock Text="Boat" FontSize="12"/>
+                <ComboBox Name="BoatComboBox">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type interfaces:IBoat}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="{Binding Seats}"/> 
+                                    <Run Text=": "/>
+                                    <Run Text="{Binding BoatName}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel> 
+
+            <StackPanel Grid.Column="1" Grid.Row="2" Margin="5">
+                <TextBlock Text="Scull?" FontSize="12"/>
+                <CheckBox IsChecked="{Binding NewCrew.Scull, Mode=TwoWay}" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+        </Grid>  
+
         <DockPanel Grid.Column="1" LastChildFill="False">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                <Button  Height="35" Margin="10" MinWidth="100" Name="AddBoatBtn">
+                <Button  Height="35" Margin="10" MinWidth="100" Name="AddCrewBtn" Click="AddCrewBtn_OnClick">
                     <TextBlock Text="Add Crew"/>
                 </Button>
-                <Button Height="35" Margin="10" Name="FinishBtn">
+                <Button Height="35" Margin="10" Name="FinishBtn" Click="FinishBtn_OnClick">
                     <TextBlock Text="Finish"/>
                 </Button>
             </StackPanel>
         </DockPanel>
-        <ContentControl Name="ContentPanel" ContentTemplate="{StaticResource BoatPane}" Grid.Column="0"/>
+        
+        <!--<ContentControl Name="ContentPanel" ContentTemplate="{StaticResource BoatPane}" Grid.Column="0"/>-->
     </Grid>
 
 </Window>
