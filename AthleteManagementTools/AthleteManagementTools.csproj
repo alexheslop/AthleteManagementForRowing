@@ -115,7 +115,7 @@
     <Compile Include="ViewModel\EnumConverter.cs" />
     <Compile Include="ViewModel\ErgSplitProfilingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MyPanel.cs" />
+    <Compile Include="ViewModel\rowerSelectPanel.cs" />
     <Compile Include="ViewModel\SeatRacingViewModel.cs" />
     <Compile Include="Model\TimeToSplitConverter.cs" />
     <Compile Include="ViewModel\SelectAthleteViewModel.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AthleteManagementTools.Annotations;
@@ -48,9 +49,9 @@ namespace AthleteManagementTools.ViewModel
 
         }
 
-        public void UpdateCrewList()
+        public void UpdateCrewList(string squad)
         {
-            //CrewList = SqlServerDbComms.ReadDatabase();
+            CrewList = SqlServerDbComms.SelectSquad("All", "All", squad);
         }
 
         public void UpdateBoatList()
@@ -69,6 +70,36 @@ namespace AthleteManagementTools.ViewModel
         {
             var newCrew = (Crew) crew;
             
+        }
+
+        public int GetSeatNumber(IList eAddedItems)
+        {
+            var boat = (Boat) (eAddedItems[0]);
+            return boat.Seats;
+        }
+
+        public void CreateNewCrew(ObservableCollection<RowerSelectPanel> panels, object boatUsed)
+        {
+            var crewBoat = (Boat) boatUsed;
+            var crew = new Crew {BoatUsed = crewBoat};
+            crew.Coxed = crewBoat.Cox;
+            crew.NumberOfMembers = crewBoat.Seats;
+            crew.Scull = crewBoat.Scull;
+            foreach (var t in panels)
+            {
+                crew.CrewList.Add(t.SelectedAthlete);
+            }
+
+            crew.CrewName = crewBoat.BoatName + " " + crewBoat.Seats;
+            
+            if (crewBoat.Scull)
+            {
+                crew.CrewName += "x";
+            }
+            else if(crewBoat.Cox)
+            {
+                crew.CrewName += "+";
+            }
         }
     }
 }

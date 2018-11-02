@@ -1,18 +1,24 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
 {
     public partial class CrewSelectionView
     {
-        private ObservableCollection<MyPanel> panels = new ObservableCollection<MyPanel>();
+        private object _boatUsed;
+
+        private ObservableCollection<RowerSelectPanel> panels = new ObservableCollection<RowerSelectPanel>();
         public CrewSelectionView()
         {
             InitializeComponent();
             DataContext = new CrewSelectionViewModel();
-            ((CrewSelectionViewModel) DataContext).UpdateCrewList();
             LstPanels.ItemsSource = panels;
+            CbxBoatName.Visibility = Visibility.Hidden;
+            LblBoatName.Visibility = Visibility.Hidden;
+
         }
 
         private void AddBoatBtn_OnClick(object sender, RoutedEventArgs e)
@@ -24,11 +30,8 @@ namespace AthleteManagementTools.View
                 ((CrewSelectionViewModel)DataContext).UpdateBoatList();
             }
         }
-        private void AddPanel(string buttonId)
-        {
-            
-        }
-    private void AddCrewBtn_OnClick(object sender, RoutedEventArgs e)
+
+        private void AddCrewBtn_OnClick(object sender, RoutedEventArgs e)
         {
             var addNewCrew = new AddCrewView();
             addNewCrew.ShowDialog();
@@ -40,8 +43,32 @@ namespace AthleteManagementTools.View
 
         private void MyButton_OnClick(object sender, RoutedEventArgs e)
         {
-            MyPanel p = new MyPanel();
-            panels.Add(p);
+            ((CrewSelectionViewModel) DataContext).CreateNewCrew(panels, _boatUsed);
+        }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            panels.Clear();
+            var seats = ((CrewSelectionViewModel)DataContext).GetSeatNumber(e.AddedItems);
+            _boatUsed = e.AddedItems[0];
+            for (int i = 0; i < seats; i++)
+            {
+                RowerSelectPanel p = new RowerSelectPanel
+                {
+                    CrewPanelCrewList = ((CrewSelectionViewModel) DataContext).CrewList
+                };
+
+                panels.Add(p);
+            }
+            
+        }
+
+        private void SquadSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var squad = ((ComboBoxItem) e.AddedItems[0]).Content.ToString();
+            ((CrewSelectionViewModel)DataContext).UpdateCrewList(squad);
+            CbxBoatName.Visibility = Visibility.Visible;
+            LblBoatName.Visibility = Visibility.Visible;
         }
     }
 }
