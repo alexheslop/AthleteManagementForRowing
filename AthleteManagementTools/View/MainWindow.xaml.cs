@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using AthleteManagementTools.Model;
 using AthleteManagementTools.ViewModel;
 
 namespace AthleteManagementTools.View
@@ -130,6 +131,23 @@ namespace AthleteManagementTools.View
                     break;
             }
             RefreshTable(SquadSelect.Text, sideString, SortBy.Text);
+        }
+
+        private void ClearSquadBtn_OnClickBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("Are you sure you want to remove all members of the squad?", "Clear Squad", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                foreach (var rower in SquadListBox.Items)
+                {
+                    SQLDatabaseComms.RemoveRowerFromDatabase(((Rower) rower).FirstName, ((Rower) rower).LastName);
+                }
+                RefreshTable(SquadSelect.Text, SideSelect.Text, SortBy.Text);
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                
+            }
         }
     }
 }

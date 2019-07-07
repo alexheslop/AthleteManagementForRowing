@@ -113,6 +113,9 @@
             </StackPanel>
             <Button Name="AddPersonBtn" Grid.Column="1" Style="{StaticResource SidebarButton}" Height="25" Width="100" Click="AddPersonBtn_OnClick" HorizontalAlignment="Right" Margin="50,0">
                 <TextBlock Text="Add Personnel..."/>
+            </Button> 
+            <Button Name="ClearSquadBtn" Grid.Column="1" Style="{StaticResource SidebarButton}" Height="25" Width="100" Click="ClearSquadBtn_OnClickBtn_OnClick" HorizontalAlignment="Right" Margin="50,0">
+                <TextBlock Text="Clear Squad..."/>
             </Button>
             <ListView Margin="20,25,20,0" ItemsSource="{Binding SquadList}" Name="SquadListBox">
                 <ListView.Resources>

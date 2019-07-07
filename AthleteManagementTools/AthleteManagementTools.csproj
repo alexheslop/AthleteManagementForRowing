@@ -95,6 +95,7 @@
     <Compile Include="Model\Rower.cs" />
     <Compile Include="Model\SplitCalculator.cs" />
     <Compile Include="Model\SplitToWattsConverter.cs" />
+    <Compile Include="Model\SQLDatabaseComms.cs" />
     <Compile Include="Model\TrainingZone.cs" />
     <Compile Include="Model\WeightClass.cs" />
     <Compile Include="Model\WeightProfilingCommonMethods.cs" />

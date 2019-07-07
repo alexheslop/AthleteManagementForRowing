@@ -4,7 +4,7 @@
     {
         public static double Expected5KScore(double watts2K)
         {
-            var score = watts2K * 0.82;
+            var score = watts2K * 0.82101;
             return score;
         }
 
