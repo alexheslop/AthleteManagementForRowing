@@ -8,7 +8,7 @@ namespace AthleteManagementTools.ViewModel
         public ObservableCollection<Rower> RowerList { get; private set; }
         public SelectAthleteViewModel()
         {
-            RowerList = AccessDatabaseComms.SelectSquad("All", "All", "FirstName");
+            RowerList = SqlServerDbComms.SelectSquad("All", "All", "FirstName");
         }
     }
 }

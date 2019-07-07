@@ -6,71 +6,101 @@
         xmlns:viewModel="clr-namespace:AthleteManagementTools.ViewModel"
         xmlns:interfaces ="clr-namespace:AthleteManagementTools.Interfaces"
         xmlns:local="clr-namespace:AthleteManagementTools.View"
+        d:DataContext="{d:DesignInstance viewModel:CrewSelectionViewModel}"
         mc:Ignorable="d"
         Title="CrewSelectionView" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModel:CrewSelectionViewModel/>
-    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="RowerSelect" >
+            <StackPanel>
+                <ComboBox Margin="15">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type interfaces:IRower}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="{Binding FirstName}"/> 
+                                    <Run Text=" "/>
+                                    <Run Text="{Binding LastName}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="TextVersionRowerSelect" DataType="{x:Type interfaces:IRower}">
+            <TextBlock>
+                <Run Text="{Binding FirstName}"/>
+                <Run Text=" "/>
+                <Run Text="{Binding LastName}"/>
+            </TextBlock>
+
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
             <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
-        <DockPanel LastChildFill="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel LastChildFill="False" Grid.Column="1">
+            <Button DockPanel.Dock="Right" Margin="25" Click="AddCrewBtn_OnClick">
+                <TextBlock Text="Add Crew.."/>
+            </Button>
             <Button DockPanel.Dock="Right" Margin="25" Click="AddBoatBtn_OnClick">
-                <TextBlock Text="Add Boat.."/>
+                <TextBlock Text="Add Shell.."/>
             </Button>
         </DockPanel>
-        <!--<ComboBox Grid.Row="1" ItemsSource="{Binding BoatList}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding BoatName}"/>
-                        <TextBlock ></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>-->
-        <Grid Grid.Row="1">
-            <ItemsControl>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <ComboBox ItemsSource="{Binding Path=BoatList}">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="61*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="15">
+                <TextBlock Text="Select Squad:"/>
+                <ComboBox SelectionChanged="SquadSelector_OnSelectionChanged">
+                        <ComboBoxItem Content="Senior Men"/>
+                        <ComboBoxItem Content="Senior Women"/>
+                        <ComboBoxItem Content="Novice Men"/>
+                        <ComboBoxItem Content="Novice Women"/>
+                </ComboBox>
+                <TextBlock Name="LblBoatName"  Text="Select Boat:"/>
+                <ComboBox Name="CbxBoatName" ItemsSource="{Binding BoatList}" SelectionChanged="Selector_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type interfaces:IBoat}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="{Binding Seats}"/> 
+                                    <Run Text=": "/>
+                                    <Run Text="{Binding BoatName}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ItemsControl Name="LstPanels" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ComboBox Margin="15" SelectedItem="{Binding SelectedAthlete, Mode=TwoWay}" ItemsSource="{Binding CrewPanelCrewList}" >
                                 <ComboBox.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type interfaces:IRower}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding BoatName}"/>
-                                            <TextBlock Text="{Binding Seats}"/>
+                                            <TextBlock>
+                                                <Run Text="{Binding FirstName}"/> 
+                                                <Run Text="{Binding LastName}"/>
+                                            </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <StackPanel>
-                                <ItemsControl ItemsSource="{Binding CrewList}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ComboBox>
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <TextBlock Text="{Binding Side}"/>
-                                                            <TextBlock Text=": "/>
-                                                            <TextBlock Text="{Binding FirstName}"/>
-                                                            <TextBlock Text="{Binding LastName}"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                
-            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <Button Name="MyButton" Padding="2"  Content="Add Crew" Click="MyButton_OnClick" Grid.Row="1" Margin="15"/>
 
         </Grid>
     </Grid>

@@ -211,7 +211,7 @@ namespace AthleteManagementTools.ViewModel
 
         public void UpdateRowerDetails(string firstName, string lastName, string splitBoxText, string pb2K, string pb5K, string pb30R20, int maxHR, int minHR)
         {
-            AccessDatabaseComms.UpdateRowerFromErgProfile(firstName, lastName, pb2K,
+            SqlServerDbComms.UpdateRowerFromErgProfile(firstName, lastName, pb2K,
                 pb5K, pb30R20, splitBoxText, maxHR, minHR);
         }
     }

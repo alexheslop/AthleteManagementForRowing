@@ -12,7 +12,7 @@ namespace AthleteManagementTools.ViewModel
 
         public void AddBoatToCollection()
         {
-            AccessDatabaseComms.WriteBoatToDatabase(NewBoat.BoatName, NewBoat.Seats, NewBoat.Cox, NewBoat.Scull,
+            SqlServerDbComms.WriteBoatToDatabase(NewBoat.BoatName, NewBoat.Seats, NewBoat.Cox, NewBoat.Scull,
                 NewBoat.ClassRank);
         }
     }

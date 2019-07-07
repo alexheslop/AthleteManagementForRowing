@@ -13,7 +13,7 @@ namespace AthleteManagementTools.ViewModel
 
         public bool UpdatePersonInDatabase()
         {
-            AccessDatabaseComms.UpdateRowerFromDetails(NewRower.FirstName, NewRower.LastName, NewRower.Squad, NewRower.Side,
+            SqlServerDbComms.UpdateRowerFromDetails(NewRower.FirstName, NewRower.LastName, NewRower.Squad, NewRower.Side,
                 NewRower.CanScull, NewRower.BowsideRank, NewRower.StrokesideRank, NewRower.ScullRank, NewRower.Injured);
             return true;
         }
